@@ -18,11 +18,6 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-/**
- * Used to log in the console with a small stack trace saying where the log was called from
- * @param {string} type The type of log to be used (console[type])
- * @param {any[]} args The arguments to be logged
- */
 import GLib from 'gi://GLib';
 import Gio from "gi://Gio?version=2.0";
 
@@ -31,23 +26,50 @@ export function is_flatpak() {
 
 }
 
-export async function runSpawn(args, extraEnv = {}) {
+/**
+ * Runs a command using Gio.Subprocess and returns a promise that resolves with the stdout output or rejects with an error containing the stderr output.
+ * @param args {string[]}
+ * @param options {{ extraEnv: { [key: string]: string }, stderrLimit: number, throwOnError: boolean }}
+ * @returns {Promise<unknown>}
+ */
+export async function runSpawn(args, options) {
     return new Promise((resolve, reject) => {
         try {
             const launcher = new Gio.SubprocessLauncher({
                 flags: (Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE)
             });
             launcher.setenv("LANG", "C", true);
-            for (const k of Object.keys(extraEnv)) launcher.setenv(k, extraEnv[k], true);
+            for (const k of Object.keys(options.extraEnv)) launcher.setenv(k, options.extraEnv[k], true);
 
             const proc = launcher.spawnv(args);
             proc.communicate_utf8_async(null, null, (proc, res) => {
                 try {
                     const [, stdout, stderr] = proc.communicate_utf8_finish(res);
-                    if (proc.get_successful()) {
+
+                    const success = proc.get_successful();
+                    let exitStatus = null;
+
+                    if (typeof proc.get_exit_status === 'function') {
+                        try { exitStatus = proc.get_exit_status(); } catch (_) { exitStatus = null; }
+                    }
+
+                    if (success) {
                         resolve(stdout);
                     } else {
-                        resolve(null);
+                        const stderrText = (stderr || '').trim();
+                        const stderrLimit = options && options.stderrLimit ? options.stderrLimit : 10000;
+                        const shortStderr = stderrText.length > stderrLimit ? stderrText.slice(0, stderrLimit) + '…(truncated)' : stderrText;
+                        const errMsg = shortStderr || `Process exited with status ${exitStatus}`;
+                        const err = new Error(errMsg);
+                        err.exitStatus = exitStatus;
+                        err.stderr = stderrText;
+                        err.stdout = stdout;
+                        if (options && options.throwOnError === false) {
+                            // backward-compat: resolve with an object instead of rejecting
+                            resolve({ stdout, stderr: stderrText, success: false, exitStatus });
+                        } else {
+                            reject(err);
+                        }
                     }
                 } catch (e) {
                     reject(e);
@@ -67,6 +89,11 @@ export function get_spawn_command() {
     }
 }
 
+/**
+ * Used to log in the console with a small stack trace saying where the log was called from
+ * @param {string} type The type of log to be used (console[type])
+ * @param {any[]} args The arguments to be logged
+ */
 export function stackLog(type, ...args) {
     let initiator = 'unknown place';
     const e = new Error();

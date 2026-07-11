@@ -3,26 +3,23 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BackgroundAgentGlobalSettings">
+    <option name="selectedModelId" value="auto" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: add an FAQ &amp; Common Issues page">
-      <change afterPath="$PROJECT_DIR$/src/faq.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/faq.ui" afterDir="false" />
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="refactor: migrate spawnv to a cleaner isolated command for usage in utils and other places and AUR detection">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/meson.build" beforeDir="false" afterPath="$PROJECT_DIR$/meson.build" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/moe.nyarchlinux.updater.json" beforeDir="false" afterPath="$PROJECT_DIR$/moe.nyarchlinux.updater.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.data.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.data.gresource.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nyarchupdater.data.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/nyarchupdater.data.gresource.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/home/adam/Documents/dev/NyarchUpdater" value="2mFKBDNZELunMwUr00IEmqpb4nc" />
+    </persistenceIdMap>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -46,96 +43,12 @@
     &quot;assignee&quot;: &quot;TheDogHusky&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/NyarchLinux/NyarchUpdater.git&quot;,
-    &quot;accountId&quot;: &quot;2d057cc8-c266-4273-8e4c-6b6048803758&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/NyarchLinux/NyarchUpdater.git",
+    "accountId": "899849ce-7d0d-4cc3-bf9c-0cf7369fd744"
   }
-}</component>
-  <component name="PackageJsonUpdateNotifier">
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/disquelocal/Documents and Settings/All Users/Ableton/Live 11 Standard/Resources/Max/resources/packages/Node for Max/source/bin/npm/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/disquelocal/Documents and Settings/All Users/Ableton/Live 11 Standard/Resources/Max/resources/packages/RNBO/server/deps/@rnbo/target-base/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/disquelocal/ProgramData/Ableton/Live 11 Standard/Resources/Max/resources/packages/Node for Max/source/bin/npm/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/disquelocal/ProgramData/Ableton/Live 11 Standard/Resources/Max/resources/packages/RNBO/server/deps/@rnbo/target-base/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/disquelocal/ProgramData/Application Data/Ableton/Live 11 Standard/Resources/Max/resources/packages/Node for Max/source/bin/npm/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/disquelocal/ProgramData/Application Data/Ableton/Live 11 Standard/Resources/Max/resources/packages/RNBO/server/deps/@rnbo/target-base/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/disquelocal/Users/All Users/Ableton/Live 11 Standard/Resources/Max/resources/packages/Node for Max/source/bin/npm/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/disquelocal/Users/All Users/Ableton/Live 11 Standard/Resources/Max/resources/packages/RNBO/server/deps/@rnbo/target-base/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/Utilisateurs/Adam/Documents/dev/JavaScript/CreationServeurs/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/Utilisateurs/Adam/Documents/dev/JavaScript/NyarchUpdater/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/Utilisateurs/Adam/Documents/dev/TypeScript/site/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/E6300000-promisify/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/@electron/http-timer/verror/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/@gar/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/@malept/promisify/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/@types/wast-parser/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/babel-loader/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/cacheable-request/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/copy-webpack-plugin/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/elliptic/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/eslint-plugin-vue/espree/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/extglob/is-accessor-descriptor/has-value/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/flush-write-stream/braces/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/flush-write-stream/enhanced-resolve/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/flush-write-stream/execa/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/flush-write-stream/is-number/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/flush-write-stream/make-dir/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/flush-write-stream/ora/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/flush-write-stream/restore-cursor/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/hpack.js/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/jsprim/yallist/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/jszip/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/memory-fs/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/minipass/array-flatten/ipaddr.js/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/minizlib/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/mississippi/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/node-libs-browser/safe-buffer/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/rc/yallist/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/snapdragon-node/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/snapdragon/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/stream-browserify/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/stream-http/define-property/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/tar/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/terser/supports-color/jsesc/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/unset-value/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/url/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/util/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0278.chk/webpack/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir0294.chk/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir1545.chk/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.000/dir1594.chk/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/0B7F0000-grunt-conventional-changelog/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/2F9F0000-karma-chrome-launcher/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/3A850000-mongoose/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/53D10000-debug/supports-web-crypto/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/5D8B0000-npm-registry-fetch/are-we-there-yet/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/5EC10000-readable-stream/token/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/5F9F0000-path-to-regexp/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/6D8B0000-node-gyp/once/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/712D0000-balanced-match/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/7E8B0000-readable-stream/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/8AAC0000-setimmediate/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/97021000-@pkgjs/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/99930000-fs/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/9AAC0000-crypto-browserify/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/A2570000-array-flatten/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/AD8B0000-first-chunk-stream/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/AE470000-etag/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/BAC41000-magic-string/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/BE8B0000-tar/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/C4100000-node_modules/compression/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/C4100000-node_modules/connect-mongo/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/C4100000-node_modules/cookie-parser/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/C4100000-node_modules/debug/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/C4100000-node_modules/passport-discord-auth/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/C4100000-node_modules/util/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/C4100000-node_modules/xss/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/CAAC0000-diffie-hellman/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/CD9F0000-yocto-queue/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/E9930000-move-file/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/EDFA0000-has-proto/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/F58F0000-colors/package.json" />
-  </component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -146,31 +59,49 @@
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="modeId" value="Ask" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_id" />
+            <option name="modelValue" value="auto" />
+          </model>
+        </option>
+        <option name="targetType" value="LOCAL" />
+      </template>
+    </option>
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Node.js.window.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SHELLCHECK.PATH&quot;: &quot;/home/adam/.local/share/JetBrains/WebStorm2024.3/Shell Script/shellcheck&quot;,
-    &quot;Shell Script.run.sh.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/run/media/adam/données/Utilisateurs/Adam/Documents/dev/TypeScript/nekoview&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/adam/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Node.js.window.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SHELLCHECK.PATH": "/home/adam/.local/share/JetBrains/WebStorm2026.1/Shell Script/shellcheck",
+    "Shell Script.run.sh.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/run/media/adam/données/Utilisateurs/Adam/Documents/dev/TypeScript/nekoview",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/home/adam/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="run.sh" type="ShConfigurationType">
       <option name="SCRIPT_TEXT" value="" />
@@ -191,7 +122,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.26927.40" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.25134.101" />
       </set>
     </attachedChunks>
   </component>
@@ -250,6 +181,7 @@
       <workItem from="1753631292333" duration="861000" />
       <workItem from="1753728904804" duration="287000" />
       <workItem from="1753731558913" duration="1372000" />
+      <workItem from="1783764803817" duration="1459000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -635,7 +567,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751571825947</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="refactor: migrate spawnv to a cleaner isolated command for usage in utils and other places and AUR detection">
+      <option name="closed" value="true" />
+      <created>1783765978704</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1783765978704</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -672,7 +612,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: version format" />
     <MESSAGE value="fix: error while opening presentation window&#10;&#10;JS ERROR: Error: Argument to the constructor of PresentationWindow should be a plain JS object with properties to set&#10;_init/Gtk.Widget.prototype._init@resource:///org/gnome/gjs/modules/core/overrides/Gtk.js:39:56&#10;PresentationWindow@resource:///moe/nyarchlinux/updater/js/presentation.js:35:9&#10;updateNyarch@resource:///moe/nyarchlinux/updater/js/window.js:372:41&#10;init/&lt;@resource:///moe/nyarchlinux/updater/js/window.js:232:24&#10;_init/GLib.MainLoop.prototype.runAsync/&lt;/&lt;@resource:///org/gnome/gjs/modules/core/overrides/GLib.js:263:34" />
     <MESSAGE value="feat: implementation of the shown_command property" />
     <MESSAGE value="feat: first slide showing off the new release" />
@@ -697,6 +636,7 @@
     <MESSAGE value="chore: bump version" />
     <MESSAGE value="feat: update run script to uninstall the app on the user" />
     <MESSAGE value="feat: easier debugging" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: easier debugging" />
+    <MESSAGE value="refactor: migrate spawnv to a cleaner isolated command for usage in utils and other places and AUR detection" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: migrate spawnv to a cleaner isolated command for usage in utils and other places and AUR detection" />
   </component>
 </project>
