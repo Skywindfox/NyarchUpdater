@@ -26,7 +26,7 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 
 import { PresentationWindow } from './presentation.js';
-import { stackLog, compareVersions, get_spawn_command } from './utils.js';
+import { stackLog, compareVersions, get_spawn_command, runSpawn } from './utils.js';
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
@@ -74,7 +74,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
     async importKey() {
         const gpgPath = GLib.file_test('/app/data/public.asc', 1) ? '/app/data/public.asc' : '/usr/share/nyarchupdater/public.asc';
         const command = `gpg --import ${gpgPath}`
-        await this.spawnv(['bash', '-c', command]).catch(this.handleError.bind(this));
+        await runSpawn(['bash', '-c', command]).catch(this.handleError.bind(this));
     }
     /**
      * Used to download the file in {configDir}/cache/update.json and to check if the update is signed with the right key
@@ -83,7 +83,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
     checkSign() {
         return new Promise(async (resolve) => {
             const command = `rm -rf ${this.configDir}/cache && mkdir -p ${this.configDir}/cache && cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && wget -T 5 -t 1 https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json && echo ok`
-            const stdout = await this.spawnv(['bash', '-c', command]).catch(() => {
+            const stdout = await runSpawn(['bash', '-c', command]).catch(() => {
                 resolve(false);
             });
             if (!stdout) {
@@ -105,9 +105,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 const sign = await this.checkSign();
                 if (!sign) {
                   // Attempt to download the update.json file separately to determine the error type
-                  log("Sign check failed");
+                  stackLog("log", "Sign check failed");
                   const command = `cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && [ -e "update.json" ]`
-                  const stdout = await this.spawnv(['bash', '-c', command]);
+                  const stdout = await runSpawn(['bash', '-c', command]);
                   if (!stdout) {
                     this.createDialog("Connection Error", "Failed to connect to the update server. Please check your internet connection and try again.");
                     reject(err);
@@ -155,7 +155,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
      */
     async fetchLocalUpdates() {
         const spawn_cmd = get_spawn_command();
-        const stdout = await this.spawnv([...spawn_cmd, 'bash', '-c', '/usr/bin/checkupdates']).catch(() => {
+        const stdout = await runSpawn([...spawn_cmd, 'bash', '-c', '/usr/bin/checkupdates']).catch(() => {
             reject(null);
         });
         if (!stdout) {
@@ -190,7 +190,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
      */
     async fetchFlatpakUpdates() {
         const spawn_cmd = get_spawn_command();
-        const stdout = await this.spawnv([...spawn_cmd, 'bash', '-c', "flatpak remote-ls --updates"]);
+        const stdout = await runSpawn([...spawn_cmd, 'bash', '-c', "flatpak remote-ls --updates"]);
         if (!stdout) {
             return [];
         }
@@ -392,24 +392,6 @@ export const NyarchupdaterWindow = GObject.registerClass({
         logError(error);
     }
 
-    spawnv(args) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let proc = this.launcher.spawnv(args);
-                proc.communicate_utf8_async(null, null, (proc, res) => {
-                    let [,stdout,] = proc.communicate_utf8_finish(res);
-                    if (proc.get_successful()) {
-                        resolve(stdout);
-                    } else {
-                        resolve(null);
-                    }
-                });
-            } catch (e) {
-                reject(e);
-            }
-        });
-    }
-
     async fetch(url) {
         const response = await this.fetchBytes(url);
         const decoder = new TextDecoder("utf-8");
@@ -448,12 +430,12 @@ export const NyarchupdaterWindow = GObject.registerClass({
 
     async updateArch() {
         const spawn_cmd = get_spawn_command();
-        await this.launcher.spawnv([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', "sudo pacman -Syu ; echo Done - Press enter to exit; read _"]);
+        await runSpawn([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', "sudo pacman -Syu ; echo Done - Press enter to exit; read _"]);
     }
 
     async updateFlatpak() {
         const spawn_cmd = get_spawn_command();
-        await this.launcher.spawnv([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', "sudo flatpak update ; echo Done - Press enter to exit; read _"]);
+        await runSpawn([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', "sudo flatpak update ; echo Done - Press enter to exit; read _"]);
     }
 
     async updateNyarch() {
@@ -500,7 +482,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
             responseLabel: "Update",
             callback: () => {
                 const spawn_cmd = get_spawn_command();
-                this.spawnv([
+                runSpawn([
                     ...spawn_cmd,
                     'gnome-terminal',
                     '--',
@@ -510,10 +492,5 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 ]);
             }
         }]);
-    }
-
-    async installAlbertIfNotPresent() {
-        log("checking if albert is installed")
-        
     }
 });

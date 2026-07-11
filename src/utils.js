@@ -24,12 +24,39 @@
  * @param {any[]} args The arguments to be logged
  */
 import GLib from 'gi://GLib';
+import Gio from "gi://Gio?version=2.0";
 
 export function is_flatpak() {
-    if (GLib.getenv("container")) {
-        return true;
-    }
-    return false;
+    return !!GLib.getenv("container");
+
+}
+
+export async function runSpawn(args, extraEnv = {}) {
+    return new Promise((resolve, reject) => {
+        try {
+            const launcher = new Gio.SubprocessLauncher({
+                flags: (Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE)
+            });
+            launcher.setenv("LANG", "C", true);
+            for (const k of Object.keys(extraEnv)) launcher.setenv(k, extraEnv[k], true);
+
+            const proc = launcher.spawnv(args);
+            proc.communicate_utf8_async(null, null, (proc, res) => {
+                try {
+                    const [, stdout, stderr] = proc.communicate_utf8_finish(res);
+                    if (proc.get_successful()) {
+                        resolve(stdout);
+                    } else {
+                        resolve(null);
+                    }
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 
 export function get_spawn_command() {
@@ -82,4 +109,59 @@ export function compareVersions(old, newer) {
         }
     }
     return 0;
+}
+
+const _programExistsCache = new Map();
+export async function programExists(program, useCache = true) {
+    if (useCache && _programExistsCache.has(program)) {
+        return _programExistsCache.get(program);
+    }
+
+    if (GLib.find_program_in_path(program)) {
+        _programExistsCache.set(program, true);
+        return true;
+    }
+
+    if (is_flatpak()) {
+        const spawn_cmd = get_spawn_command();
+        const args = [...spawn_cmd, 'which', program];
+
+        try {
+            const out = await runSpawn(args).catch(() => null);
+            const exists = !!(out && out.trim().length);
+            _programExistsCache.set(program, exists);
+            return exists;
+        } catch (e) {
+            _programExistsCache.set(program, false);
+            return false;
+        }
+    }
+
+    _programExistsCache.set(program, false);
+    return false;
+}
+
+/**
+ * Returns the user's AUR Helper
+ * @returns {Promise<string|null>}
+ */
+export async function getAURHelper() {
+    const supported = ['paru', 'yay', 'pikaur', 'pakku', 'trizen', 'yaourt'];
+
+    const envChoice = (GLib.getenv('AUR_HELPER') || GLib.getenv('aur_helper') || '').trim();
+    if (envChoice) {
+        if (!supported.includes(envChoice)) {
+            stackLog('warn', `AUR_HELPER environment variable is set to '${envChoice}', which is not a supported AUR helper. Supported helpers are: ${supported.join(', ')}`);
+            return null;
+        }
+        if (await programExists(envChoice)) return envChoice;
+    }
+
+    // TODO Settings
+
+    for (const prog of supported) {
+        if (await programExists(prog)) return prog;
+    }
+
+    return null;
 }
