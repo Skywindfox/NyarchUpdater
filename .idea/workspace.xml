@@ -7,7 +7,7 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: bump version">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: use gnome 49 from the official flathub infra">
       <change beforePath="$PROJECT_DIR$/.github/workflows/flatpak-build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/flatpak-build.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -181,15 +181,7 @@
       <workItem from="1753631292333" duration="861000" />
       <workItem from="1753728904804" duration="287000" />
       <workItem from="1753731558913" duration="1372000" />
-      <workItem from="1783764803817" duration="6375000" />
-    </task>
-    <task id="LOCAL-00006" summary="feat: started making package listings">
-      <option name="closed" value="true" />
-      <created>1727279629780</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1727279629780</updated>
+      <workItem from="1783764803817" duration="7098000" />
     </task>
     <task id="LOCAL-00007" summary="fix: access to flatpack environment">
       <option name="closed" value="true" />
@@ -575,7 +567,15 @@
       <option name="project" value="LOCAL" />
       <updated>1783772567917</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="fix: use gnome 49 from the official flathub infra">
+      <option name="closed" value="true" />
+      <created>1783772820962</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1783772820962</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -612,7 +612,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: show the image" />
     <MESSAGE value="fix: use GtkPicture instead of GtkImage" />
     <MESSAGE value="feat: implement command images" />
     <MESSAGE value="feat: implement checksuccess, needs a fix" />
@@ -637,6 +636,7 @@
     <MESSAGE value="chore: add workspace shit" />
     <MESSAGE value="fix: fit the new runSpawn and fix stacklog" />
     <MESSAGE value="chore: bump version" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: bump version" />
+    <MESSAGE value="fix: use gnome 49 from the official flathub infra" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: use gnome 49 from the official flathub infra" />
   </component>
 </project>

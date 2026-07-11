@@ -15,5 +15,4 @@ jobs:
         with:
           bundle: nyarchupdater.flatpak
           manifest-path: moe.nyarchlinux.updater.json
-          cache-key: flatpak-builder-${{ github.sha }}
-          path: '.'
+          cache: false
