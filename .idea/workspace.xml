@@ -7,7 +7,10 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="refactor: improve runSpawn">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: add workspace shit">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/flatpak-build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/flatpak-build.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/moe.nyarchlinux.updater.json" beforeDir="false" afterPath="$PROJECT_DIR$/moe.nyarchlinux.updater.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
     </list>
@@ -82,6 +85,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Node.js.window.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -181,23 +185,7 @@
       <workItem from="1753631292333" duration="861000" />
       <workItem from="1753728904804" duration="287000" />
       <workItem from="1753731558913" duration="1372000" />
-      <workItem from="1783764803817" duration="2132000" />
-    </task>
-    <task id="LOCAL-00002" summary="feat: started making the app">
-      <option name="closed" value="true" />
-      <created>1726676336624</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1726676336624</updated>
-    </task>
-    <task id="LOCAL-00003" summary="feat: started making requests">
-      <option name="closed" value="true" />
-      <created>1726681539593</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1726681539593</updated>
+      <workItem from="1783764803817" duration="5872000" />
     </task>
     <task id="LOCAL-00004" summary="fix: finally made a request, made the update check work">
       <option name="closed" value="true" />
@@ -575,7 +563,23 @@
       <option name="project" value="LOCAL" />
       <updated>1783766273987</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="refactor: improve runSpawn">
+      <option name="closed" value="true" />
+      <created>1783766947674</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1783766947674</updated>
+    </task>
+    <task id="LOCAL-00052" summary="chore: add workspace shit">
+      <option name="closed" value="true" />
+      <created>1783767004950</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1783767004950</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -612,7 +616,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: implementation of the shown_command property" />
     <MESSAGE value="feat: first slide showing off the new release" />
     <MESSAGE value="fix: show the image" />
     <MESSAGE value="fix: use GtkPicture instead of GtkImage" />
@@ -637,6 +640,7 @@
     <MESSAGE value="feat: easier debugging" />
     <MESSAGE value="refactor: migrate spawnv to a cleaner isolated command for usage in utils and other places and AUR detection" />
     <MESSAGE value="refactor: improve runSpawn" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: improve runSpawn" />
+    <MESSAGE value="chore: add workspace shit" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: add workspace shit" />
   </component>
 </project>

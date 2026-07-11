@@ -52,7 +52,7 @@ export function is_flatpak() {
  * @param {RunSpawnSuccessOptions & { throwOnError: false }} options
  * @returns {Promise<RunSpawnFailureResult>}
  */
-export async function runSpawn(args, options = {}) {
+export async function runSpawn(args, options = { throwOnError: true }) {
     return new Promise((resolve, reject) => {
         try {
             const launcher = new Gio.SubprocessLauncher({
