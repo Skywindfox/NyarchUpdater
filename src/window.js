@@ -26,7 +26,7 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 
 import { PresentationWindow } from './presentation.js';
-import { stackLog, compareVersions, get_spawn_command, runSpawn } from './utils.js';
+import { stackLog, compareVersions, get_spawn_command, runSpawn, getAURHelper } from './utils.js';
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
@@ -155,10 +155,17 @@ export const NyarchupdaterWindow = GObject.registerClass({
      */
     async fetchLocalUpdates() {
         const spawn_cmd = get_spawn_command();
-        const stdout = await runSpawn([...spawn_cmd, 'bash', '-c', '/usr/bin/checkupdates']).catch(() => {
-            reject(null);
-        });
-        if (!stdout) {
+        const result = await runSpawn([...spawn_cmd, 'bash', '-c', '/usr/bin/checkupdates'], { throwOnError: false });
+
+        if (!result.success) {
+            if (result.stderr) {
+                stackLog("warn", "checkupdates stderr:", result.stderr);
+            }
+            return [];
+        }
+
+        const stdout = result.stdout || '';
+        if (!stdout.trim()) {
             return [];
         }
 
@@ -191,6 +198,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
     async fetchFlatpakUpdates() {
         const spawn_cmd = get_spawn_command();
         const stdout = await runSpawn([...spawn_cmd, 'bash', '-c', "flatpak remote-ls --updates"]);
+
+        stackLog('log', stdout)
+
         if (!stdout) {
             return [];
         }
@@ -265,29 +275,32 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this._refresh_button.set_child(box);
         spinner.start();
         const errors = [false, false, false];
-        const localUpdatesPromise = this.fetchLocalUpdates().catch(() => {
+        const localUpdates = await this.fetchLocalUpdates().catch((err) => {
             this.resetButton(box, spinner);
             errors[0] = true;
+            stackLog("log", "Error fetching local updates:", err, "\n", err.stdout);
+            return [];
         });
-        const endpointUpdatesPromise = this.fetchUpdatesEndpoint().catch(() => {
+        const endpointUpdates = await this.fetchUpdatesEndpoint().catch((err) => {
             this.resetButton(box, spinner);
             errors[1] = true;
+            stackLog("log", "Error fetching nyarch updates:", err, "\n", err.stdout);
+            return [];
         });
-        const flatpakUpdatesPromise = this.fetchFlatpakUpdates().catch(() => {
+        const flatpakUpdates = await this.fetchFlatpakUpdates().catch((err) => {
             this.resetButton(box, spinner);
             errors[2] = true;
+            stackLog("log", "Error fetching flatpak updates:", err, "\n", err.stdout);
+            return [];
         });
 
-        const localUpdates = await localUpdatesPromise;
-        const endpointUpdates = await endpointUpdatesPromise;
-        const flatpakUpdates = await flatpakUpdatesPromise;
         this._refresh_button.set_sensitive(true);
         spinner.stop();
         box.set_center_widget(doneLabel);
         this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates, errors).catch(this.handleError.bind(this));
         await this.fetchAppUpdates().catch((err) => {
-            log("Error fetching app updates");
-            log(err)
+            stackLog("error", "Error fetching app updates");
+            stackLog("log", err);
         });
     }
 
@@ -382,14 +395,13 @@ export const NyarchupdaterWindow = GObject.registerClass({
     }
 
     handleError(error) {
-        log("Error");
         this.setState("arch", "error", "An error occurred");
         this.setState("flatpak", "error", "An error occurred");
         this.setState("nyarch", "error", "An error occurred");
 
         this.createDialog("An error occurred", `Oopsie, an error occurred during the update check! \nError message: ${error.message}`);
 
-        logError(error);
+        stackLog("error", error);
     }
 
     async fetch(url) {
@@ -471,7 +483,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
     }
 
     async fetchAppUpdates() {
-        log("Fetching app updates");
+        stackLog("log", "Fetching app updates");
         const res = await this.fetch("https://api.github.com/repos/NyarchLinux/NyarchUpdater/releases/latest");
         const currentVersion = this.application.version;
         const latestVersion = res.tag_name;
@@ -492,5 +504,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 ]);
             }
         }]);
+    }
+
+    async fetchAURUpdates() {
+        const helper = await getAURHelper();
     }
 });

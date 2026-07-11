@@ -7,7 +7,7 @@ jobs:
     name: "Flatpak"
     runs-on: ubuntu-latest
     container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-47
+      image: bilelmoussaoui/flatpak-github-actions:gnome-49
       options: --privileged
     steps:
       - uses: actions/checkout@v4
@@ -16,3 +16,4 @@ jobs:
           bundle: nyarchupdater.flatpak
           manifest-path: moe.nyarchlinux.updater.json
           cache-key: flatpak-builder-${{ github.sha }}
+          path: '.'

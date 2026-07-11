@@ -27,19 +27,42 @@ export function is_flatpak() {
 }
 
 /**
- * Runs a command using Gio.Subprocess and returns a promise that resolves with the stdout output or rejects with an error containing the stderr output.
- * @param args {string[]}
- * @param options {{ extraEnv: { [key: string]: string }, stderrLimit: number, throwOnError: boolean }}
- * @returns {Promise<unknown>}
+ * @typedef {Object} RunSpawnSuccessOptions
+ * @property {boolean} [throwOnError=true]
+ * @property {{ [key: string]: string }} [extraEnv]
+ * @property {number} [stderrLimit]
  */
-export async function runSpawn(args, options) {
+/**
+ * @typedef {Object} RunSpawnFailureResult
+ * @property {string} stdout
+ * @property {string} stderr
+ * @property {boolean} success
+ * @property {number|null} exitStatus
+ */
+
+/**
+ * Runs a command using Gio.Subprocess and returns stdout.
+ * @param {string[]} args
+ * @param {RunSpawnSuccessOptions & { throwOnError?: true }} [options]
+ * @returns {Promise<string>}
+ */
+/**
+ * Runs a command using Gio.Subprocess and returns a structured result when throwOnError is false.
+ * @param {string[]} args
+ * @param {RunSpawnSuccessOptions & { throwOnError: false }} options
+ * @returns {Promise<RunSpawnFailureResult>}
+ */
+export async function runSpawn(args, options = {}) {
     return new Promise((resolve, reject) => {
         try {
             const launcher = new Gio.SubprocessLauncher({
                 flags: (Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE)
             });
+
             launcher.setenv("LANG", "C", true);
-            for (const k of Object.keys(options.extraEnv)) launcher.setenv(k, options.extraEnv[k], true);
+            for (const [k, v] of Object.entries(options.extraEnv || {})) {
+                launcher.setenv(k, v, true);
+            }
 
             const proc = launcher.spawnv(args);
             proc.communicate_utf8_async(null, null, (proc, res) => {
@@ -54,20 +77,21 @@ export async function runSpawn(args, options) {
                     }
 
                     if (success) {
-                        resolve(stdout);
+                        if (options?.throwOnError === false) resolve({ stdout, stderr, success: true, exitStatus: 0 });
+                        else resolve(stdout);
                     } else {
                         const stderrText = (stderr || '').trim();
-                        const stderrLimit = options && options.stderrLimit ? options.stderrLimit : 10000;
-                        const shortStderr = stderrText.length > stderrLimit ? stderrText.slice(0, stderrLimit) + '…(truncated)' : stderrText;
-                        const errMsg = shortStderr || `Process exited with status ${exitStatus}`;
-                        const err = new Error(errMsg);
-                        err.exitStatus = exitStatus;
-                        err.stderr = stderrText;
-                        err.stdout = stdout;
-                        if (options && options.throwOnError === false) {
+                        if (options?.throwOnError === false) {
                             // backward-compat: resolve with an object instead of rejecting
                             resolve({ stdout, stderr: stderrText, success: false, exitStatus });
                         } else {
+                            const stderrLimit = options && options.stderrLimit ? options.stderrLimit : 10000;
+                            const shortStderr = stderrText.length > stderrLimit ? stderrText.slice(0, stderrLimit) + '…(truncated)' : stderrText;
+                            const errMsg = shortStderr || `Process exited with status ${exitStatus}`;
+                            const err = new Error(errMsg);
+                            err.exitStatus = exitStatus;
+                            err.stderr = stderrText;
+                            err.stdout = stdout;
                             reject(err);
                         }
                     }
@@ -91,28 +115,35 @@ export function get_spawn_command() {
 
 /**
  * Used to log in the console with a small stack trace saying where the log was called from
- * @param {string} type The type of log to be used (console[type])
- * @param {any[]} args The arguments to be logged
+ * @param {keyof Console} type The type of log to be used (console[type])
+ * @param {...any} args The arguments to be logged
  */
 export function stackLog(type, ...args) {
     let initiator = 'unknown place';
-    const e = new Error();
-    if (typeof e.stack === 'string') {
-        let isFirst = true;
-        for (const line of e.stack.split('\n')) {
-            const matches = line.match(/^\s+at\s+(.*)/);
-            if (matches) {
-                // first line - current function
-                if (!isFirst) {
-                    // second line - caller (what we are looking for)
-                    initiator = matches[1];
-                    break;
-                }
-                isFirst = false;
-            }
+
+    const stack = (new Error()).stack;
+    if (typeof stack === 'string') {
+        const lines = stack.split('\n');
+
+        for (const raw of lines) {
+            const line = raw.trim();
+            if (!line) continue;
+
+            if (line.includes('stackLog@')) continue;
+            if (line.includes('resource:///org/gnome/gjs/modules/')) continue;
+            if (line.startsWith('Error')) continue;
+
+            initiator = line;
+            break;
         }
     }
-    console[type](...args, '\n', `  at ${initiator}`);
+
+    const fn = /** @type {((...data: any[]) => void) | undefined} */ (console[type]);
+    if (typeof fn === 'function') {
+        fn.call(console, ...args, '\n', `  at ${initiator}`);
+    } else {
+        console.log(...args, '\n', `  at ${initiator}`);
+    }
 }
 
 /**
