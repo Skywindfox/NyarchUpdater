@@ -7,12 +7,8 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: add workspace shit">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: bump version">
       <change beforePath="$PROJECT_DIR$/.github/workflows/flatpak-build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/flatpak-build.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/moe.nyarchlinux.updater.json" beforeDir="false" afterPath="$PROJECT_DIR$/moe.nyarchlinux.updater.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,23 +181,7 @@
       <workItem from="1753631292333" duration="861000" />
       <workItem from="1753728904804" duration="287000" />
       <workItem from="1753731558913" duration="1372000" />
-      <workItem from="1783764803817" duration="5872000" />
-    </task>
-    <task id="LOCAL-00004" summary="fix: finally made a request, made the update check work">
-      <option name="closed" value="true" />
-      <created>1727278296822</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1727278296822</updated>
-    </task>
-    <task id="LOCAL-00005" summary="feat: made a guide">
-      <option name="closed" value="true" />
-      <created>1727278490676</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1727278490676</updated>
+      <workItem from="1783764803817" duration="6375000" />
     </task>
     <task id="LOCAL-00006" summary="feat: started making package listings">
       <option name="closed" value="true" />
@@ -579,7 +559,23 @@
       <option name="project" value="LOCAL" />
       <updated>1783767004950</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="fix: fit the new runSpawn and fix stacklog">
+      <option name="closed" value="true" />
+      <created>1783772320664</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1783772320664</updated>
+    </task>
+    <task id="LOCAL-00054" summary="chore: bump version">
+      <option name="closed" value="true" />
+      <created>1783772567917</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1783772567917</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -616,7 +612,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: first slide showing off the new release" />
     <MESSAGE value="fix: show the image" />
     <MESSAGE value="fix: use GtkPicture instead of GtkImage" />
     <MESSAGE value="feat: implement command images" />
@@ -635,12 +630,13 @@
     <MESSAGE value="chore: update copyright" />
     <MESSAGE value="feat: better version checking" />
     <MESSAGE value="feat: version check function" />
-    <MESSAGE value="chore: bump version" />
     <MESSAGE value="feat: update run script to uninstall the app on the user" />
     <MESSAGE value="feat: easier debugging" />
     <MESSAGE value="refactor: migrate spawnv to a cleaner isolated command for usage in utils and other places and AUR detection" />
     <MESSAGE value="refactor: improve runSpawn" />
     <MESSAGE value="chore: add workspace shit" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: add workspace shit" />
+    <MESSAGE value="fix: fit the new runSpawn and fix stacklog" />
+    <MESSAGE value="chore: bump version" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: bump version" />
   </component>
 </project>
