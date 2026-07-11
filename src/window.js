@@ -199,8 +199,6 @@ export const NyarchupdaterWindow = GObject.registerClass({
         const spawn_cmd = get_spawn_command();
         const stdout = await runSpawn([...spawn_cmd, 'bash', '-c', "flatpak remote-ls --updates"]);
 
-        stackLog('log', stdout)
-
         if (!stdout) {
             return [];
         }
