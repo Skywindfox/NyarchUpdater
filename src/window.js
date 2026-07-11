@@ -26,7 +26,9 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 
 import { PresentationWindow } from './presentation.js';
-import { stackLog, compareVersions, get_spawn_command, runSpawn, getAURHelper } from './utils.js';
+import { stackLog, compareVersions, get_spawn_command, runSpawn } from './utils.js';
+
+import { getAURHelper, getUpdatesForHelper } from "./aur";
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
@@ -506,5 +508,6 @@ export const NyarchupdaterWindow = GObject.registerClass({
 
     async fetchAURUpdates() {
         const helper = await getAURHelper();
+        return getUpdatesForHelper(helper);
     }
 });

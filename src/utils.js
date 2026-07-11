@@ -28,10 +28,11 @@ export function is_flatpak() {
 
 /**
  * @typedef {Object} RunSpawnSuccessOptions
- * @property {boolean} [throwOnError=true]
- * @property {{ [key: string]: string }} [extraEnv]
- * @property {number} [stderrLimit]
+ * @property {boolean} [throwOnError] If false, the function resolves with an object describing the result instead of throwing
+ * @property {{ [key: string]: string }} [extraEnv] Extra environment variables to set
+ * @property {number} [stderrLimit] Maximum chars from stderr included into thrown Error message
  */
+
 /**
  * @typedef {Object} RunSpawnFailureResult
  * @property {string} stdout
@@ -41,18 +42,36 @@ export function is_flatpak() {
  */
 
 /**
- * Runs a command using Gio.Subprocess and returns stdout.
+ * @overload
+ * @param {string[]} args
+ * @returns {Promise<string>}
+ */
+/**
+ * @overload
  * @param {string[]} args
  * @param {RunSpawnSuccessOptions & { throwOnError?: true }} [options]
  * @returns {Promise<string>}
  */
 /**
- * Runs a command using Gio.Subprocess and returns a structured result when throwOnError is false.
+ * @overload
+ * @param {string[]} args
+ * @param {RunSpawnSuccessOptions & { throwOnError: true }} options
+ * @returns {Promise<string>}
+ */
+/**
+ * @overload
  * @param {string[]} args
  * @param {RunSpawnSuccessOptions & { throwOnError: false }} options
  * @returns {Promise<RunSpawnFailureResult>}
  */
-export async function runSpawn(args, options = { throwOnError: true }) {
+/**
+ * @param {string[]} args
+ * @param {RunSpawnSuccessOptions} [options]
+ * @returns {Promise<string|RunSpawnFailureResult>}
+ */
+export async function runSpawn(args, options) {
+    const opts = /** @type {RunSpawnSuccessOptions} */ (options || {});
+
     return new Promise((resolve, reject) => {
         try {
             const launcher = new Gio.SubprocessLauncher({
@@ -60,7 +79,7 @@ export async function runSpawn(args, options = { throwOnError: true }) {
             });
 
             launcher.setenv("LANG", "C", true);
-            for (const [k, v] of Object.entries(options.extraEnv || {})) {
+            for (const [k, v] of Object.entries(opts.extraEnv || {})) {
                 launcher.setenv(k, v, true);
             }
 
@@ -77,15 +96,15 @@ export async function runSpawn(args, options = { throwOnError: true }) {
                     }
 
                     if (success) {
-                        if (options?.throwOnError === false) resolve({ stdout, stderr, success: true, exitStatus: 0 });
+                        if (opts.throwOnError === false) resolve({ stdout, stderr, success: true, exitStatus: 0 });
                         else resolve(stdout);
                     } else {
                         const stderrText = (stderr || '').trim();
-                        if (options?.throwOnError === false) {
+                        if (opts.throwOnError === false) {
                             // backward-compat: resolve with an object instead of rejecting
                             resolve({ stdout, stderr: stderrText, success: false, exitStatus });
                         } else {
-                            const stderrLimit = options && options.stderrLimit ? options.stderrLimit : 10000;
+                            const stderrLimit = opts && opts.stderrLimit ? opts.stderrLimit : 10000;
                             const shortStderr = stderrText.length > stderrLimit ? stderrText.slice(0, stderrLimit) + '…(truncated)' : stderrText;
                             const errMsg = shortStderr || `Process exited with status ${exitStatus}`;
                             const err = new Error(errMsg);
@@ -169,57 +188,3 @@ export function compareVersions(old, newer) {
     return 0;
 }
 
-const _programExistsCache = new Map();
-export async function programExists(program, useCache = true) {
-    if (useCache && _programExistsCache.has(program)) {
-        return _programExistsCache.get(program);
-    }
-
-    if (GLib.find_program_in_path(program)) {
-        _programExistsCache.set(program, true);
-        return true;
-    }
-
-    if (is_flatpak()) {
-        const spawn_cmd = get_spawn_command();
-        const args = [...spawn_cmd, 'which', program];
-
-        try {
-            const out = await runSpawn(args).catch(() => null);
-            const exists = !!(out && out.trim().length);
-            _programExistsCache.set(program, exists);
-            return exists;
-        } catch (e) {
-            _programExistsCache.set(program, false);
-            return false;
-        }
-    }
-
-    _programExistsCache.set(program, false);
-    return false;
-}
-
-/**
- * Returns the user's AUR Helper
- * @returns {Promise<string|null>}
- */
-export async function getAURHelper() {
-    const supported = ['paru', 'yay', 'pikaur', 'pakku', 'trizen', 'yaourt'];
-
-    const envChoice = (GLib.getenv('AUR_HELPER') || GLib.getenv('aur_helper') || '').trim();
-    if (envChoice) {
-        if (!supported.includes(envChoice)) {
-            stackLog('warn', `AUR_HELPER environment variable is set to '${envChoice}', which is not a supported AUR helper. Supported helpers are: ${supported.join(', ')}`);
-            return null;
-        }
-        if (await programExists(envChoice)) return envChoice;
-    }
-
-    // TODO Settings
-
-    for (const prog of supported) {
-        if (await programExists(prog)) return prog;
-    }
-
-    return null;
-}
