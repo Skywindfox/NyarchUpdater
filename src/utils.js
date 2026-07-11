@@ -21,7 +21,7 @@
 import GLib from 'gi://GLib';
 import Gio from "gi://Gio?version=2.0";
 
-export function is_flatpak() {
+export function isFlatpak() {
     return !!GLib.getenv("container");
 
 }
@@ -124,12 +124,11 @@ export async function runSpawn(args, options) {
     });
 }
 
-export function get_spawn_command() {
-    if (is_flatpak()) {
-        return ["flatpak-spawn", "--host"];
-    } else {
-        return [];
-    }
+export function getSpawnCommand(bash) {
+    const command = [];
+    if (isFlatpak()) command.push(...["flatpak-spawn", "--host"]);
+    if (bash) command.push(...["bash", "-c"])
+    return command;
 }
 
 /**

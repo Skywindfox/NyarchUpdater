@@ -175,6 +175,65 @@
                       </object>
                     </child>
                     <child>
+                      <object class="AdwExpanderRow" id="aur_row">
+                        <property name="title">AUR Updates</property>
+                        <property name="subtitle">Updates to your installed Arch User Repository packages</property>
+                        <child type="suffix">
+                          <object class="GtkButton" id="aur_button">
+                            <property name="label">Update</property>
+                            <property name="valign">center</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="suggested-action" />
+                            </style>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkSpinner" id="aur_spinner">
+                            <property name="valign">center</property>
+                            <property name="spinning">true</property>
+                            <property name="visible">true</property>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="aur_success">
+                            <property name="valign">center</property>
+                            <property name="icon-name">updater-check-round-outline-symbolic</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="flat" />
+                              <class name="success" />
+                            </style>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="aur_error">
+                            <property name="valign">center</property>
+                            <property name="icon-name">edit-delete-symbolic</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="flat" />
+                              <class name="error" />
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="hexpand">true</property>
+                            <property name="max-content-height">150</property>
+                            <property name="propagate-natural-height">true</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
+                            <child>
+                              <object class="GtkLabel" id="aur_label">
+                                <property name="label">Checking for updates...</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
                       <object class="AdwActionRow" id="nyarch_row">
                         <property name="title">Nyarch Updates</property>
                         <property name="subtitle">Updates to user configuration and Nyarch</property>

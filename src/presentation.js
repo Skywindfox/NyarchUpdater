@@ -23,7 +23,7 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk?version=4.0';
 import GtkPixbuf from 'gi://GdkPixbuf';
 
-import { get_spawn_command } from './utils.js';
+import { getSpawnCommand } from './utils.js';
 
 export const PresentationWindow = GObject.registerClass({
     GTypeName: 'PresentationWindow',
@@ -220,7 +220,7 @@ export const PresentationWindow = GObject.registerClass({
             this.destroy();
             this.mainWindow.window = null;
         } else if (command.startsWith('checkSuccess')) {
-            const spawn_cmd = get_spawn_command();
+            const spawn_cmd = getSpawnCommand();
             let stdout = await this.mainWindow.spawnv([...spawn_cmd, 'bash', '-c', command.replace("checkSuccess ", "")]).catch(this.mainWindow.handleError.bind(this.mainWindow));
             if (stdout) stdout = stdout.trim() === "true";
             const buttonBox = this.buttonBoxes[this._carousel.get_position()];
@@ -269,12 +269,12 @@ export const PresentationWindow = GObject.registerClass({
                     fullCommand += "\n" + command;
                 }
                 // wait for the terminal to finish executing the commands
-                const spawn_cmd = get_spawn_command();
+                const spawn_cmd = getSpawnCommand();
                 await this.mainWindow.spawnv([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', fullCommand]).catch(this.mainWindow.handleError.bind(this.mainWindow));
                 this.goTo(Number(this.slides) - 1);
                 return;
             }
-            const spawn_cmd = get_spawn_command();
+            const spawn_cmd = getSpawnCommand();
             this.mainWindow.spawnv([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', command]).catch(() => {});
             const buttonBox = this.buttonBoxes[this._carousel.get_position()];
             const checkSuccessButton = buttonBox.find(button => button.label === 'Check Success');

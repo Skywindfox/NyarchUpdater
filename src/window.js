@@ -26,9 +26,9 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 
 import { PresentationWindow } from './presentation.js';
-import { stackLog, compareVersions, get_spawn_command, runSpawn } from './utils.js';
+import { stackLog, compareVersions, getSpawnCommand, runSpawn } from './utils.js';
 
-import { getAURHelper, getUpdatesForHelper } from "./aur";
+import { doUpdateForHelper, getAURHelper, getUpdatesForHelper } from "./aur.js";
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
@@ -48,7 +48,12 @@ export const NyarchupdaterWindow = GObject.registerClass({
         'flatpak_spinner',
         'flatpak_success',
         'flatpak_button',
-        'flatpak_error'
+        'flatpak_error',
+        'aur_label',
+        'aur_spinner',
+        'aur_success',
+        'aur_button',
+        'aur_error'
     ],
 }, class NyarchupdaterWindow extends Adw.ApplicationWindow {
     constructor(application) {
@@ -156,7 +161,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @returns {Promise<Array<ArchUpdatePackageInfo>>}
      */
     async fetchLocalUpdates() {
-        const spawn_cmd = get_spawn_command();
+        const spawn_cmd = getSpawnCommand();
         const result = await runSpawn([...spawn_cmd, 'bash', '-c', '/usr/bin/checkupdates'], { throwOnError: false });
 
         if (!result.success) {
@@ -198,7 +203,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @returns {Promise<Array<FlatpakUpdatePackageInfo>>}
      */
     async fetchFlatpakUpdates() {
-        const spawn_cmd = get_spawn_command();
+        const spawn_cmd = getSpawnCommand();
         const stdout = await runSpawn([...spawn_cmd, 'bash', '-c', "flatpak remote-ls --updates"]);
 
         if (!stdout) {
@@ -230,10 +235,11 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @param {any[]} localUpdates
      * @param {any[]} endpointUpdates
      * @param {any[]} flatpakUpdates
+     * @param {any[]} aurUpdates
      * @param {boolean[]} errors
      * @returns {Promise<void>}
      */
-    async updateWindow(localUpdates, endpointUpdates, flatpakUpdates, errors) {
+    async updateWindow(localUpdates, endpointUpdates, flatpakUpdates, aurUpdates, errors) {
         if (endpointUpdates) {
             this.setState("nyarch", "updateAvailable", `A new version of Nyarch Linux is available: ${endpointUpdates}`);
         } else if (errors[1]) {
@@ -258,6 +264,14 @@ export const NyarchupdaterWindow = GObject.registerClass({
         } else {
             this.setState("flatpak", "success");
         }
+
+        if (aurUpdates.length) {
+            this.setState("aur", "updateAvailable", aurUpdates.map(update => `${update.name} ${update.current} -> ${update.latest}`).join('\n'));
+        } else if (errors[3]) {
+            this.setState("aur", "error");
+        } else {
+            this.setState("aur", "success");
+        }
     }
 
     /**
@@ -274,33 +288,39 @@ export const NyarchupdaterWindow = GObject.registerClass({
         box.set_center_widget(loadingLabel);
         this._refresh_button.set_child(box);
         spinner.start();
-        const errors = [false, false, false];
+        const errors = [false, false, false, false];
         const localUpdates = await this.fetchLocalUpdates().catch((err) => {
             this.resetButton(box, spinner);
             errors[0] = true;
-            stackLog("log", "Error fetching local updates:", err, "\n", err.stdout);
+            stackLog("error", "Error fetching local updates:", err, "\n", err.stdout);
             return [];
         });
         const endpointUpdates = await this.fetchUpdatesEndpoint().catch((err) => {
             this.resetButton(box, spinner);
             errors[1] = true;
-            stackLog("log", "Error fetching nyarch updates:", err, "\n", err.stdout);
+            stackLog("error", "Error fetching nyarch updates:", err, "\n", err.stdout);
             return [];
         });
         const flatpakUpdates = await this.fetchFlatpakUpdates().catch((err) => {
             this.resetButton(box, spinner);
             errors[2] = true;
-            stackLog("log", "Error fetching flatpak updates:", err, "\n", err.stdout);
+            stackLog("error", "Error fetching flatpak updates:", err, "\n", err.stdout);
+            return [];
+        });
+        const aurUpdates = await this.fetchAURUpdates().catch((err) => {
+            this.resetButton(box, spinner);
+            errors[3] = true;
+            stackLog("error", "Error fetching AUR updates:", err, "\n", err.stdout);
             return [];
         });
 
         this._refresh_button.set_sensitive(true);
         spinner.stop();
         box.set_center_widget(doneLabel);
-        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates, errors).catch(this.handleError.bind(this));
+        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates, aurUpdates, errors).catch(this.handleError.bind(this));
         await this.fetchAppUpdates().catch((err) => {
             stackLog("error", "Error fetching app updates");
-            stackLog("log", err);
+            stackLog("error", err);
         });
     }
 
@@ -321,6 +341,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this._flatpak_button.connect("clicked", async () => {
             await this.updateFlatpak().catch(this.handleError.bind(this));
         });
+        this._aur_button.connect("clicked", async () => {
+            await this.updateAUR().catch(this.handleError.bind(this));
+        });
         this._nyarch_button.connect("clicked", async () => {
             await this.updateNyarch().catch(this.handleError.bind(this));
         });
@@ -340,7 +363,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
      */
     /**
      * Type of elements
-     * @typedef {"arch"|"flatpak"|"nyarch"|string} ElementType
+     * @typedef {"arch"|"flatpak"|"nyarch"|"aur"|string} ElementType
      */
     /**
      * Used to set the state of a specific type (Arch Updates, Flatpak Updates, Nyarch Updates)
@@ -397,11 +420,12 @@ export const NyarchupdaterWindow = GObject.registerClass({
     handleError(error) {
         this.setState("arch", "error", "An error occurred");
         this.setState("flatpak", "error", "An error occurred");
+        this.setState("aur", "error", "An error occurred")
         this.setState("nyarch", "error", "An error occurred");
 
         this.createDialog("An error occurred", `Oopsie, an error occurred during the update check! \nError message: ${error.message}`);
 
-        stackLog("error", error);
+        stackLog("error", "An error occurred during the update check:", error);
     }
 
     async fetch(url) {
@@ -441,13 +465,13 @@ export const NyarchupdaterWindow = GObject.registerClass({
     }
 
     async updateArch() {
-        const spawn_cmd = get_spawn_command();
-        await runSpawn([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', "sudo pacman -Syu ; echo Done - Press enter to exit; read _"]);
+        const spawnCommand = getSpawnCommand();
+        await runSpawn([...spawnCommand, 'gnome-terminal', '--', 'bash', '-c', "sudo pacman -Syu ; echo Done - Press enter to exit; read _"]);
     }
 
     async updateFlatpak() {
-        const spawn_cmd = get_spawn_command();
-        await runSpawn([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', "sudo flatpak update ; echo Done - Press enter to exit; read _"]);
+        const spawnCommand = getSpawnCommand();
+        await runSpawn([...spawnCommand, 'gnome-terminal', '--', 'bash', '-c', "sudo flatpak update ; echo Done - Press enter to exit; read _"]);
     }
 
     async updateNyarch() {
@@ -458,6 +482,11 @@ export const NyarchupdaterWindow = GObject.registerClass({
             window.close();
             this.window = null;
         });
+    }
+
+    async updateAUR() {
+        const helper = await getAURHelper();
+        return doUpdateForHelper(helper);
     }
 
     createDialog(title, message, options = []) {
@@ -493,7 +522,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
             responseId: "update",
             responseLabel: "Update",
             callback: () => {
-                const spawn_cmd = get_spawn_command();
+                const spawn_cmd = getSpawnCommand();
                 runSpawn([
                     ...spawn_cmd,
                     'gnome-terminal',

@@ -7,12 +7,13 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: remove unnecessary logging">
-      <change afterPath="$PROJECT_DIR$/src/aur.js" afterDir="false" />
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: aur updates support">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aur.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aur.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,15 +195,7 @@
       <workItem from="1753728904804" duration="287000" />
       <workItem from="1753731558913" duration="1372000" />
       <workItem from="1783764803817" duration="9079000" />
-      <workItem from="1783776736756" duration="3345000" />
-    </task>
-    <task id="LOCAL-00009" summary="chore: idea files updates">
-      <option name="closed" value="true" />
-      <created>1728487856390</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1728487856390</updated>
+      <workItem from="1783776736756" duration="6044000" />
     </task>
     <task id="LOCAL-00010" summary="chore: update README.md">
       <option name="closed" value="true" />
@@ -588,7 +581,15 @@
       <option name="project" value="LOCAL" />
       <updated>1783773945573</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="feat: aur updates support">
+      <option name="closed" value="true" />
+      <created>1783787799777</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1783787799777</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,6 +605,7 @@
     <option featureType="dependencySupport" implementationName="javascript:npm:karma" />
     <option featureType="dependencySupport" implementationName="javascript:npm:tslint" />
     <option featureType="dependencySupport" implementationName="javascript:npm:nuxt" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.asc" />
     <option featureType="dependencySupport" implementationName="javascript:npm:prettier" />
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.ui" />
     <option featureType="dependencySupport" implementationName="javascript:npm:ejs" />
@@ -625,7 +627,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: implement checksuccess, needs a fix" />
     <MESSAGE value="chore: add another task to do later" />
     <MESSAGE value="chore: refractor code" />
     <MESSAGE value="fix: flatpak updates version not shown correctly" />
@@ -650,6 +651,7 @@
     <MESSAGE value="fix: use gnome 49 from the official flathub infra" />
     <MESSAGE value="fix: build" />
     <MESSAGE value="chore: remove unnecessary logging" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: remove unnecessary logging" />
+    <MESSAGE value="feat: aur updates support" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: aur updates support" />
   </component>
 </project>

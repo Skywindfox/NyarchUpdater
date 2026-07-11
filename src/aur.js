@@ -19,10 +19,10 @@
  */
 
 import GLib from "gi://GLib";
-import { get_spawn_command, is_flatpak, runSpawn, stackLog } from "./utils";
+import { getSpawnCommand, isFlatpak, runSpawn, stackLog } from "./utils.js";
 
 export const _programExistsCache = new Map();
-export const _sanitizer = ["|", "awk", "'{print $1, $2, $3, $4}'"];
+export const _sanitizer = [" | awk '{print $1, $2, $3, $4}'"];
 // pakku is not supported because it does not allow a script-friendly output and only updates query from AUR, yaourt doesn't exist anymore and aura doesn't allow simply querying updates
 const supported = ['paru', 'yay', 'pikaur', 'trizen'];
 const outputParseRegex = /^(\S+)\s+(\S+)\s+->\s+(\S+)$/;
@@ -43,8 +43,8 @@ export async function programExists(program, useCache = true) {
         return true;
     }
 
-    if (is_flatpak()) {
-        const spawn_cmd = get_spawn_command();
+    if (isFlatpak()) {
+        const spawn_cmd = getSpawnCommand();
         const args = [...spawn_cmd, 'which', program];
 
         try {
@@ -124,9 +124,9 @@ export function getUpdatesForHelper(helper) {
     }
 }
 
-export function doUpdate(...command) {
-    const spawnCommand = get_spawn_command();
-    const args = [...spawnCommand, 'gnome-terminal', '--', 'bash', '-c', ...command];
+export function doUpdate(command) {
+    const spawnCommand = getSpawnCommand();
+    const args = [...spawnCommand, 'gnome-terminal', '--', 'bash', '-c', command];
 
     return runSpawn(args, { throwOnError: true });
 }
@@ -134,41 +134,41 @@ export function doUpdate(...command) {
 /* AUR Helper Updates */
 
 export async function doParuUpdate() {
-    return doUpdate('paru', '-Sua');
+    return doUpdate('paru -Sua');
 }
 export async function doYayUpdate() {
-    return doUpdate('yay', '-Sua');
+    return doUpdate('yay -Sua');
 }
 export async function doPikaurUpdate() {
-    return doUpdate('pikaur', '-Sua');
+    return doUpdate('pikaur -Sua');
 }
 export async function doTrizenUpdate() {
-    return doUpdate('trizen', '-Sua');
+    return doUpdate('trizen -Sua');
 }
 
 export async function listParuUpdates() {
-    const spawnCommand = get_spawn_command();
+    const spawnCommand = getSpawnCommand(true);
 
-    const out = await runSpawn([...spawnCommand, 'paru', '-Qua', '2>/dev/null', ..._sanitizer], { throwOnError: true });
+    const out = await runSpawn([...spawnCommand, 'paru -Qua 2>/dev/null' + _sanitizer], { throwOnError: true });
     return getAURUpdatesFromHelperOutput(out);
 }
 export async function listYayUpdates() {
-    const spawnCommand = get_spawn_command();
+    const spawnCommand = getSpawnCommand(true);
 
-    const out = await runSpawn([...spawnCommand, 'yay', '-Qua', '2>/dev/null', ..._sanitizer], { throwOnError: true });
+    const out = await runSpawn([...spawnCommand, 'yay --sudo true -Qua 2>/dev/null' + _sanitizer], { throwOnError: true });
     return getAURUpdatesFromHelperOutput(out);
 }
 export async function listTrizenUpdates() {
-    const spawnCommand = get_spawn_command();
+    const spawnCommand = getSpawnCommand(true);
 
-    const out = await runSpawn([...spawnCommand, 'trizen', '-Qua', '2>/dev/null', ..._sanitizer], { throwOnError: true });
+    const out = await runSpawn([...spawnCommand, 'trizen -Qua 2>/dev/null' + _sanitizer], { throwOnError: true });
     return getAURUpdatesFromHelperOutput(out);
 }
 
 export async function listPikaurUpdates() {
-    const spawnCommand = get_spawn_command();
+    const spawnCommand = getSpawnCommand(true);
 
-    const out = await runSpawn([...spawnCommand, 'pikaur', '-Qua', '2>/dev/null', ..._sanitizer], { throwOnError: true });
+    const out = await runSpawn([...spawnCommand, 'pikaur -Qua 2>/dev/null' + _sanitizer], { throwOnError: true });
     return getAURUpdatesFromHelperOutput(out);
 }
 
