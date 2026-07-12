@@ -30,6 +30,8 @@ import { stackLog, compareVersions, getSpawnCommand, runSpawn } from './utils.js
 
 import { doUpdateForHelper, getAURHelper, getUpdatesForHelper } from "./aur.js";
 
+// TODO settings page
+
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
     Template: 'resource:///moe/nyarchlinux/updater/window.ui',
@@ -643,8 +645,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
     }
 
     async fetchAURUpdates() {
-        //const helper = await getAURHelper(this.settings);
-        if (!false) {
+        const helper = await getAURHelper(this.settings);
+        if (!helper) {
             throw new Error("No supported AUR helper is installed on your machine. Please install one of the following: yay, pikaur, paru, trizen.")
         }
 
