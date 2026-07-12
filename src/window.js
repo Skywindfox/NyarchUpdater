@@ -68,7 +68,6 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.init();
         this.application = application;
         this.settings = new Gio.Settings({ schema_id: 'moe.nyarchlinux.updater' });
-        this.settings.set_boolean('first-start', true);
         this.firstStart = this.settings.get_boolean('first-start');
         if (this.firstStart) {
             this.settings.set_boolean('first-start', false);
@@ -91,7 +90,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
     checkSign() {
         return new Promise(async (resolve) => {
             const command = `rm -rf ${this.configDir}/cache && mkdir -p ${this.configDir}/cache && cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && wget -T 5 -t 1 https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json && echo ok`;
-            const stdout = await runSpawn(['bash', '-c', command]).catch((err) => {
+            const stdout = await runSpawn(['bash', '-c', command]).catch(() => {
                 resolve(false);
             });
 
