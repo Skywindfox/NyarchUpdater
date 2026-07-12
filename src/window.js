@@ -65,9 +65,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
         });
         this.launcher.setenv("LANG", "C", true);
         this.configDir = GLib.get_user_config_dir();
-        this.init();
         this.application = application;
         this.settings = new Gio.Settings({ schema_id: 'moe.nyarchlinux.updater' });
+        this.init();
         this.firstStart = this.settings.get_boolean('first-start');
         if (this.firstStart) {
             this.settings.set_boolean('first-start', false);
@@ -87,66 +87,61 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * Used to download the file in {configDir}/cache/update.json and to check if the update is signed with the right key
      * @returns {Promise<boolean>}
      */
-    checkSign() {
-        return new Promise(async (resolve) => {
-            const command = `rm -rf ${this.configDir}/cache && mkdir -p ${this.configDir}/cache && cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && wget -T 5 -t 1 https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json && echo ok`;
-            const stdout = await runSpawn(['bash', '-c', command]).catch(() => {
-                resolve(false);
-            });
-
-            if (stdout.trim().split('\n').pop() !== 'ok') {
-                resolve(false);
-            } else {
-                resolve(true);
-            }
+    async checkSign() {
+        const command = `rm -rf ${this.configDir}/cache && mkdir -p ${this.configDir}/cache && cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && wget -T 5 -t 1 https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json && echo ok`;
+        const stdout = await runSpawn(['bash', '-c', command]).catch(err => {
+            stackLog('error', 'Error during the command execution of checkSign()', err);
+            return "";
         });
+        return stdout.trim().split('\n').pop() === 'ok';
     }
 
     /**
      * Used to fetch the releases from the endpoint
      * @returns {Promise<string>}
      */
-    fetchUpdatesEndpoint() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const sign = await this.checkSign();
-                if (!sign) {
-                  // Attempt to download the update.json file separately to determine the error type
-                  stackLog("log", "Sign check failed");
-                  const command = `cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && [ -e "update.json" ]`
-                  const stdout = await runSpawn(['bash', '-c', command]);
-                  if (!stdout) {
-                    this.createDialog("Connection Error", "Failed to connect to the update server. Please check your internet connection and try again.");
-                    reject(err);
-                    return;
-                  }
+    async fetchUpdatesEndpoint() {
+        const sign = await this.checkSign();
 
-                  // If update.json downloads successfully, it's likely a signature error
-                  if (stdout) {
-                    this.createDialog("Signature Error", "The downloaded update file could not be verified with the correct signature. This might indicate a security issue. Check Nyarch news channels");
-                    reject(null);
-                  }
-                  return;
-                }
-                const decoder = new TextDecoder('utf-8');
-                const json = JSON.parse(decoder.decode(GLib.file_get_contents(this.configDir + "/cache/update.json")[1]));
-                const [ok, current] = GLib.file_get_contents("/version");
-                if (!ok) {
-                    reject("Could not read /version file");
-                    return;
-                }
-                const currentVersion = new TextDecoder().decode(current).trim();
-                const newer = json[currentVersion];
-                this.newer = newer
-                if (!newer) {
-                    resolve(null);
-                } else {
-                    resolve(newer);
-                }
-            } catch (err) {
-                reject(err);
+        if (!sign) {
+            // Attempt to download the update.json file separately to determine the error type
+            stackLog("log", "Sign check failed");
+            const command = `cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && [ -e "update.json" ]`
+            const stdout = await runSpawn(['bash', '-c', command]);
+
+            if (!stdout) {
+                this.createDialog("Connection Error", "Failed to connect to the update server. Please check your internet connection and try again.");
+                throw new Error("Connection error");
             }
-        })
+
+            // If update.json downloads successfully, it's likely a signature error
+            if (stdout && stdout.trim().length > 0) {
+                this.createDialog("Signature Error", "The downloaded update file could not be verified with the correct signature. This might indicate a security issue. Check Nyarch news channels, and verify the logs");
+                throw new Error("Signature Error");
+            }
+
+            this.createDialog("Unknown Error", "An unknown error occurred during the signature check. Please check the logs for more information.");
+            throw new Error("Unknown error during signature check");
+        }
+
+        const decoder = new TextDecoder('utf-8');
+        const json = JSON.parse(decoder.decode(GLib.file_get_contents(this.configDir + "/cache/update.json")[1]));
+        const [ok, current] = GLib.file_get_contents("/version");
+
+        if (!ok) {
+            this.createDialog("Error", "Could not read /version file while checking for Nyarch updates. Please give the permissions to read the /version file to Nyarch Updater");
+            throw new Error("Version file read error");
+        }
+
+        const currentVersion = new TextDecoder().decode(current).trim();
+        const newer = json[currentVersion];
+        this.newer = newer
+
+        if (!newer) {
+            return null;
+        } else {
+            return newer;
+        }
     }
 
     /**
@@ -295,19 +290,19 @@ export const NyarchupdaterWindow = GObject.registerClass({
         const localUpdates = await this.fetchLocalUpdates().catch((err) => {
             this.resetButton(box, spinner);
             errors[0] = err;
-            stackLog("error", "Error fetching local updates:", err, "\n", err.stdout);
+            stackLog("error", "Error fetching local updates:", err);
             return [];
         });
         const endpointUpdates = await this.fetchUpdatesEndpoint().catch((err) => {
             this.resetButton(box, spinner);
             errors[1] = err;
-            stackLog("error", "Error fetching nyarch updates:", err, "\n", err.stdout);
-            return [];
+            stackLog("error", "Error fetching nyarch updates:", err);
+            return null;
         });
         const flatpakUpdates = await this.fetchFlatpakUpdates().catch((err) => {
             this.resetButton(box, spinner);
             errors[2] = err;
-            stackLog("error", "Error fetching flatpak updates:", err, "\n", err.stdout);
+            stackLog("error", "Error fetching flatpak updates:", err);
             return [];
         });
         const aurUpdates = await this.fetchAURUpdates().catch((err) => {
@@ -346,6 +341,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.setState("flatpak");
         this.setState("nyarch");
         this.setState("aur");
+        stackLog('log', this.settings.get_string('aur-helper'));
+        stackLog('log', this.settings.get_boolean('aur-updates-enabled'));
 
         this._refresh_button.connect("clicked", async () => {
             await this.checkForUpdates().catch(err => this.handleError({

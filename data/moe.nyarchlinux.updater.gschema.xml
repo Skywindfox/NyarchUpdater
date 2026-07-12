@@ -4,5 +4,20 @@
         <key name="first-start" type="b">
             <default>true</default>
         </key>
+        <key name="aur-updates-enabled" type="b">
+            <default>true</default>
+        </key>
+        <key name="aur-helper" type="s">
+            <default>"auto"</default>
+            <description>The AUR helper Updater will use. Must be one of the supported choices.</description>
+            <summary>AUR Helper</summary>
+            <choices>
+                <choice value="auto" />
+                <choice value="paru" />
+                <choice value="yay" />
+                <choice value="pikaur" />
+                <choice value="trizen" />
+            </choices>
+        </key>
   </schema>
 </schemalist>
