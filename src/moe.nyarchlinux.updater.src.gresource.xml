@@ -8,5 +8,6 @@
     <file>utils.js</file>
     <file>faq.js</file>
     <file>aur.js</file>
+    <file>settings.js</file>
   </gresource>
 </gresources>

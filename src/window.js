@@ -571,7 +571,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
 
     async updateArch() {
         const spawnCommand = getSpawnCommand();
-        await runSpawn([...spawnCommand, 'gnome-terminal', '--', 'bash', '-c', "sudo pacman -Syu ; echo Done - Press enter to exit; read _"]);
+        const updateCmd = this.settings.get_string('system-update-command') || "sudo pacman -Syu";
+        await runSpawn([...spawnCommand, 'gnome-terminal', '--', 'bash', '-c', `${updateCmd} ; echo Done - Press enter to exit; read _`]);
     }
 
     async updateFlatpak() {

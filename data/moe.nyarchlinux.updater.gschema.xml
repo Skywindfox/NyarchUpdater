@@ -19,5 +19,10 @@
                 <choice value="trizen" />
             </choices>
         </key>
+        <key name="system-update-command" type="s">
+            <default>"sudo pacman -Syu"</default>
+            <description>The command used to run system updates.</description>
+            <summary>System Update Command</summary>
+        </key>
   </schema>
 </schemalist>
