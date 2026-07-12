@@ -53,7 +53,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
         'aur_spinner',
         'aur_success',
         'aur_button',
-        'aur_error'
+        'aur_error',
+        'aur_row'
     ],
 }, class NyarchupdaterWindow extends Adw.ApplicationWindow {
     constructor(application) {
@@ -228,13 +229,14 @@ export const NyarchupdaterWindow = GObject.registerClass({
     /**
      * Used to update the content of the window
      * @param {any[]} localUpdates
-     * @param {any[]} endpointUpdates
+     * @param {string} endpointUpdates
      * @param {any[]} flatpakUpdates
      * @param {any[]} aurUpdates
-     * @param {boolean[]} errors
+     * @param {(Error | null)[]} errors
+     * @param {boolean} aurEnabled
      * @returns {Promise<void>}
      */
-    async updateWindow(localUpdates, endpointUpdates, flatpakUpdates, aurUpdates, errors) {
+    async updateWindow(localUpdates, endpointUpdates, flatpakUpdates, aurUpdates, errors, aurEnabled) {
         if (endpointUpdates) {
             this.setState("nyarch", "updateAvailable", `A new version of Nyarch Linux is available: ${endpointUpdates}`);
         } else if (errors[1]) {
@@ -260,12 +262,14 @@ export const NyarchupdaterWindow = GObject.registerClass({
             this.setState("flatpak", "success");
         }
 
-        if (aurUpdates.length) {
-            this.setState("aur", "updateAvailable", aurUpdates.map(update => `${update.name} ${update.current} -> ${update.latest}`).join('\n'));
-        } else if (errors[3]) {
-            this.setState("aur", "error");
-        } else {
-            this.setState("aur", "success");
+        if (aurEnabled) {
+            if (aurUpdates.length) {
+                this.setState("aur", "updateAvailable", aurUpdates.map(update => `${update.name} ${update.current} -> ${update.latest}`).join('\n'));
+            } else if (errors[3]) {
+                this.setState("aur", "error");
+            } else {
+                this.setState("aur", "success");
+            }
         }
     }
 
@@ -305,20 +309,31 @@ export const NyarchupdaterWindow = GObject.registerClass({
             stackLog("error", "Error fetching flatpak updates:", err);
             return [];
         });
-        const aurUpdates = await this.fetchAURUpdates().catch((err) => {
-            if (err.message.startsWith('No supported AUR helper is installed')) this.createDialog("Missing AUR Helper", err.message);
 
-            this.resetButton(box, spinner);
-            errors[3] = err;
-            stackLog("error", "Error fetching AUR updates:", err, "\n", err.stdout);
-            return [];
-        });
+        const aurEnabled = this.settings.get_boolean('aur-updates-enabled');
+        let aurUpdates = [];
+
+        if (aurEnabled) {
+            aurUpdates = await this.fetchAURUpdates().catch((err) => {
+                if (err.message.startsWith('No supported AUR helper is installed')) {
+                    this.createDialog("Missing AUR Helper", err.message);
+                    this.settings.set_boolean("aur-updates-enabled", false);
+                }
+
+                this.resetButton(box, spinner);
+                errors[3] = err;
+                stackLog("error", "Error fetching AUR updates:", err, "\n", err.stdout);
+                return [];
+            });
+        } else {
+            this.setState('aur', 'disabled', 'AUR updates are disabled');
+        }
 
         this._refresh_button.set_sensitive(true);
         spinner.stop();
         box.set_center_widget(doneLabel);
 
-        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates, aurUpdates, errors).catch((err) => this.handleError({
+        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates, aurUpdates, errors, aurEnabled).catch((err) => this.handleError({
             error: err,
             dialog: false,
             logMessage: 'Error during the updateWindow call'
@@ -341,8 +356,13 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.setState("flatpak");
         this.setState("nyarch");
         this.setState("aur");
-        stackLog('log', this.settings.get_string('aur-helper'));
-        stackLog('log', this.settings.get_boolean('aur-updates-enabled'));
+
+        this.settings.bind(
+            'aur-updates-enabled',
+            this._aur_row,
+            'sensitive',
+            Gio.SettingsBindFlags.DEFAULT
+        );
 
         this._refresh_button.connect("clicked", async () => {
             await this.checkForUpdates().catch(err => this.handleError({
@@ -449,6 +469,13 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 this[`_${type}_success`].set_visible(false);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(true);
+                this[`_${type}_error`].set_visible(false);
+                break;
+            case "disabled":
+                if (type !== "nyarch") this[`_${type}_label`].set_label(label || "AUR updates are disabled");
+                this[`_${type}_success`].set_visible(false);
+                this[`_${type}_spinner`].set_visible(false);
+                this[`_${type}_button`].set_visible(false);
                 this[`_${type}_error`].set_visible(false);
                 break;
             default:
@@ -561,7 +588,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
     }
 
     async updateAUR() {
-        const helper = await getAURHelper();
+        const helper = await getAURHelper(this.settings);
         return doUpdateForHelper(helper);
     }
 
@@ -616,8 +643,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
     }
 
     async fetchAURUpdates() {
-        const helper = await getAURHelper();
-        if (!helper) {
+        //const helper = await getAURHelper(this.settings);
+        if (!false) {
             throw new Error("No supported AUR helper is installed on your machine. Please install one of the following: yay, pikaur, paru, trizen.")
         }
 

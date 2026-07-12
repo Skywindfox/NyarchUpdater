@@ -64,9 +64,10 @@ export async function programExists(program, useCache = true) {
 
 /**
  * Returns the user's AUR Helper
+ * @param {Gio.Settings} settings
  * @returns {Promise<string|null>}
  */
-export async function getAURHelper() {
+export async function getAURHelper(settings) {
     const envChoice = (GLib.getenv('AUR_HELPER') || GLib.getenv('aur_helper') || '').trim();
     if (envChoice) {
         if (!supported.includes(envChoice)) {
@@ -76,7 +77,10 @@ export async function getAURHelper() {
         if (await programExists(envChoice)) return envChoice;
     }
 
-    // TODO Settings
+    const aurHelper = settings.get_string('aur-helper');
+    if (aurHelper && aurHelper !== 'auto') {
+        if (await programExists(aurHelper)) return aurHelper;
+    }
 
     for (const prog of supported) {
         if (await programExists(prog)) return prog;

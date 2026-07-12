@@ -7,9 +7,9 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: remove debugging">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: errors in the sign checking">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/moe.nyarchlinux.updater.gschema.xml" beforeDir="false" afterPath="$PROJECT_DIR$/data/moe.nyarchlinux.updater.gschema.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aur.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aur.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -193,15 +193,7 @@
       <workItem from="1753731558913" duration="1372000" />
       <workItem from="1783764803817" duration="9079000" />
       <workItem from="1783776736756" duration="6279000" />
-      <workItem from="1783846588550" duration="4704000" />
-    </task>
-    <task id="LOCAL-00014" summary="feat: make the update button work for arch updates">
-      <option name="closed" value="true" />
-      <created>1728745651292</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1728745651292</updated>
+      <workItem from="1783846588550" duration="5513000" />
     </task>
     <task id="LOCAL-00015" summary="feat: proper error handling, arch updates">
       <option name="closed" value="true" />
@@ -587,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1783848754313</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="fix: errors in the sign checking">
+      <option name="closed" value="true" />
+      <created>1783851342385</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1783851342385</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -625,7 +625,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: add types for easier development" />
     <MESSAGE value="fix: not being able to close the presentation window after closing it before and reopening it" />
     <MESSAGE value="chore: bump version and remove unused variable from run.sh" />
     <MESSAGE value="chore: bump version and add app details" />
@@ -650,6 +649,7 @@
     <MESSAGE value="chore: bump version" />
     <MESSAGE value="feat: annoying update&#10;&#10;Added a check to verify if you have an AUR Helper installed. If not, will be annoying and show you a dialog each time" />
     <MESSAGE value="chore: remove debugging" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: remove debugging" />
+    <MESSAGE value="fix: errors in the sign checking" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: errors in the sign checking" />
   </component>
 </project>
