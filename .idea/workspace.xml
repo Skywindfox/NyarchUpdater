@@ -7,13 +7,9 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: aur updates support">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: bump version">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aur.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aur.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,23 +191,8 @@
       <workItem from="1753728904804" duration="287000" />
       <workItem from="1753731558913" duration="1372000" />
       <workItem from="1783764803817" duration="9079000" />
-      <workItem from="1783776736756" duration="6044000" />
-    </task>
-    <task id="LOCAL-00010" summary="chore: update README.md">
-      <option name="closed" value="true" />
-      <created>1728488099110</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1728488099110</updated>
-    </task>
-    <task id="LOCAL-00011" summary="fix: merge errors, refactor">
-      <option name="closed" value="true" />
-      <created>1728734185359</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1728734185359</updated>
+      <workItem from="1783776736756" duration="6279000" />
+      <workItem from="1783846588550" duration="1984000" />
     </task>
     <task id="LOCAL-00012" summary="feat: FLatpak updates, use the new design">
       <option name="closed" value="true" />
@@ -589,7 +570,23 @@
       <option name="project" value="LOCAL" />
       <updated>1783787799777</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="feat: aur updates in the updater&#10;&#10;Auto detects the AUR helper&#10;WIP: settings for the user to input its preferred aur helper">
+      <option name="closed" value="true" />
+      <created>1783790514931</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1783790514931</updated>
+    </task>
+    <task id="LOCAL-00060" summary="chore: bump version">
+      <option name="closed" value="true" />
+      <created>1783790534839</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1783790534839</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -627,7 +624,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chore: add another task to do later" />
     <MESSAGE value="chore: refractor code" />
     <MESSAGE value="fix: flatpak updates version not shown correctly" />
     <MESSAGE value="feat: add types for easier development" />
@@ -647,11 +643,12 @@
     <MESSAGE value="refactor: improve runSpawn" />
     <MESSAGE value="chore: add workspace shit" />
     <MESSAGE value="fix: fit the new runSpawn and fix stacklog" />
-    <MESSAGE value="chore: bump version" />
     <MESSAGE value="fix: use gnome 49 from the official flathub infra" />
     <MESSAGE value="fix: build" />
     <MESSAGE value="chore: remove unnecessary logging" />
     <MESSAGE value="feat: aur updates support" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: aur updates support" />
+    <MESSAGE value="feat: aur updates in the updater&#10;&#10;Auto detects the AUR helper&#10;WIP: settings for the user to input its preferred aur helper" />
+    <MESSAGE value="chore: bump version" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: bump version" />
   </component>
 </project>

@@ -68,10 +68,11 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.init();
         this.application = application;
         this.settings = new Gio.Settings({ schema_id: 'moe.nyarchlinux.updater' });
+        this.settings.set_boolean('first-start', true);
         this.firstStart = this.settings.get_boolean('first-start');
         if (this.firstStart) {
             this.settings.set_boolean('first-start', false);
-            this.importKey().catch(this.handleError.bind(this));
+            this.importKey().catch((err) => this.handleError({ error: err, dialog: true, message: 'An error happened during the key importation process' }));
         }
     }
 
@@ -81,7 +82,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
     async importKey() {
         const gpgPath = GLib.file_test('/app/data/public.asc', 1) ? '/app/data/public.asc' : '/usr/share/nyarchupdater/public.asc';
         const command = `gpg --import ${gpgPath}`
-        await runSpawn(['bash', '-c', command]).catch(this.handleError.bind(this));
+        await runSpawn(['bash', '-c', command]).catch((err) => this.handleError({ error: err, dialog: true, message: 'An error happened during the key importation process' }));
     }
     /**
      * Used to download the file in {configDir}/cache/update.json and to check if the update is signed with the right key
@@ -89,12 +90,12 @@ export const NyarchupdaterWindow = GObject.registerClass({
      */
     checkSign() {
         return new Promise(async (resolve) => {
-            const command = `rm -rf ${this.configDir}/cache && mkdir -p ${this.configDir}/cache && cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && wget -T 5 -t 1 https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json && echo ok`
-            const stdout = await runSpawn(['bash', '-c', command]).catch(() => {
+            const command = `rm -rf ${this.configDir}/cache && mkdir -p ${this.configDir}/cache && cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && wget -T 5 -t 1 https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json && echo ok`;
+            const stdout = await runSpawn(['bash', '-c', command]).catch((err) => {
                 resolve(false);
             });
-            if (!stdout) {
-                stackLog("log", command)
+
+            if (stdout.trim().split('\n').pop() !== 'ok') {
                 resolve(false);
             } else {
                 resolve(true);
@@ -284,32 +285,37 @@ export const NyarchupdaterWindow = GObject.registerClass({
         const spinner = Gtk.Spinner.new();
         const loadingLabel = Gtk.Label.new("Checking for updates...");
         const doneLabel = Gtk.Label.new("Check for updates");
+
         box.set_start_widget(spinner);
         box.set_center_widget(loadingLabel);
         this._refresh_button.set_child(box);
         spinner.start();
-        const errors = [false, false, false, false];
+
+        const errors = [null, null, null, null];
+
         const localUpdates = await this.fetchLocalUpdates().catch((err) => {
             this.resetButton(box, spinner);
-            errors[0] = true;
+            errors[0] = err;
             stackLog("error", "Error fetching local updates:", err, "\n", err.stdout);
             return [];
         });
         const endpointUpdates = await this.fetchUpdatesEndpoint().catch((err) => {
             this.resetButton(box, spinner);
-            errors[1] = true;
+            errors[1] = err;
             stackLog("error", "Error fetching nyarch updates:", err, "\n", err.stdout);
             return [];
         });
         const flatpakUpdates = await this.fetchFlatpakUpdates().catch((err) => {
             this.resetButton(box, spinner);
-            errors[2] = true;
+            errors[2] = err;
             stackLog("error", "Error fetching flatpak updates:", err, "\n", err.stdout);
             return [];
         });
         const aurUpdates = await this.fetchAURUpdates().catch((err) => {
+            if (err.message.startsWith('No supported AUR helper is installed')) this.createDialog("Missing AUR Helper", err.message);
+
             this.resetButton(box, spinner);
-            errors[3] = true;
+            errors[3] = err;
             stackLog("error", "Error fetching AUR updates:", err, "\n", err.stdout);
             return [];
         });
@@ -317,10 +323,19 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this._refresh_button.set_sensitive(true);
         spinner.stop();
         box.set_center_widget(doneLabel);
-        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates, aurUpdates, errors).catch(this.handleError.bind(this));
+
+        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates, aurUpdates, errors).catch((err) => this.handleError({
+            error: err,
+            dialog: false,
+            logMessage: 'Error during the updateWindow call'
+        }));
+
         await this.fetchAppUpdates().catch((err) => {
-            stackLog("error", "Error fetching app updates");
-            stackLog("error", err);
+            this.handleError({
+                error: err,
+                dialog: false,
+                logMessage: 'Error during the app update check'
+            });
         });
     }
 
@@ -331,23 +346,55 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.setState("arch");
         this.setState("flatpak");
         this.setState("nyarch");
+        this.setState("aur");
 
         this._refresh_button.connect("clicked", async () => {
-            await this.checkForUpdates().catch(this.handleError.bind(this));
+            await this.checkForUpdates().catch(err => this.handleError({
+                error: err,
+                dialog: false
+            }));
         });
+
         this._arch_button.connect("clicked", async () => {
-            await this.updateArch().catch(this.handleError.bind(this));
+            await this.updateArch().catch(err => this.handleError({
+                error: err,
+                dialog: true,
+                title: 'An error occurred during the update process',
+                message: 'An error occurred while trying to update Arch packages. Please check the logs for more information.'
+            }));
         });
+
         this._flatpak_button.connect("clicked", async () => {
-            await this.updateFlatpak().catch(this.handleError.bind(this));
+            await this.updateFlatpak().catch(err => this.handleError({
+                error: err,
+                dialog: true,
+                title: 'An error occurred during the update process',
+                message: 'An error occurred while trying to update Flatpak packages. Please check the logs for more information.'
+            }));
         });
+
         this._aur_button.connect("clicked", async () => {
-            await this.updateAUR().catch(this.handleError.bind(this));
+            await this.updateAUR().catch(err => this.handleError({
+                error: err,
+                dialog: true,
+                title: 'An error occurred during the update process',
+                message: 'An error occurred while trying to update AUR packages. Please check the logs for more information.'
+            }));
         });
+
         this._nyarch_button.connect("clicked", async () => {
-            await this.updateNyarch().catch(this.handleError.bind(this));
+            await this.updateNyarch().catch(err => this.handleError({
+                error: err,
+                dialog: true,
+                title: 'An error occurred during the update process',
+                message: 'An error occurred while trying to update Nyarch. Please check the logs for more information.'
+            }));
         });
-        this.checkForUpdates().catch(this.handleError.bind(this));
+
+        this.checkForUpdates().catch(err => this.handleError({
+            error: err,
+            dialog: false
+        }));
     }
 
     resetButton(box, spinner) {
@@ -381,35 +428,35 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 this[`_${type}_error`].set_visible(false);
                 break;
             case "success":
-                if (type !== "nyarch")this[`_${type}_label`].set_label(label || "No update needed");
+                if (type !== "nyarch") this[`_${type}_label`].set_label(label || "No update needed");
                 this[`_${type}_success`].set_visible(true);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(false);
                 this[`_${type}_error`].set_visible(false);
                 break;
             case "error":
-                if (type !== "nyarch")this[`_${type}_label`].set_label(label || "An error occurred");
+                if (type !== "nyarch") this[`_${type}_label`].set_label(label || "An error occurred, check the logs for more information");
                 this[`_${type}_success`].set_visible(false);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(false);
                 this[`_${type}_error`].set_visible(true);
                 break;
             case "idle":
-                if (type !== "nyarch")this[`_${type}_label`].set_label(label || "No update needed");
+                if (type !== "nyarch") this[`_${type}_label`].set_label(label || "No update needed");
                 this[`_${type}_success`].set_visible(true);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(false);
                 this[`_${type}_error`].set_visible(false);
                 break;
             case "updateAvailable":
-                if (type !== "nyarch")this[`_${type}_label`].set_label(label || "Update available");
+                if (type !== "nyarch") this[`_${type}_label`].set_label(label || "Update available");
                 this[`_${type}_success`].set_visible(false);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(true);
                 this[`_${type}_error`].set_visible(false);
                 break;
             default:
-                if (type !== "nyarch")this[`_${type}_label`].set_label(label || "No update needed");
+                if (type !== "nyarch") this[`_${type}_label`].set_label(label || "No update needed");
                 this[`_${type}_success`].set_visible(false);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(false);
@@ -417,15 +464,48 @@ export const NyarchupdaterWindow = GObject.registerClass({
         }
     }
 
-    handleError(error) {
-        this.setState("arch", "error", "An error occurred");
-        this.setState("flatpak", "error", "An error occurred");
-        this.setState("aur", "error", "An error occurred")
-        this.setState("nyarch", "error", "An error occurred");
+    /**
+     * @typedef {Object} HandleErrorOptions
+     * @property {Error} [error] An error object to show the user
+     * @property {ElementType} [type] The type of the state to update
+     * @property {string} [title] The title of the error dialog
+     * @property {string} [message] The message for the error dialog
+     * @property {boolean} [dialog] Whether to show a dialog
+     * @property {string} [stateErrorMessage] The error message to display in the UI updates section
+     * @property {string} [logMessage] The message to log
+     */
+    /**
+     *
+     * @param {HandleErrorOptions} options
+     */
+    handleError(options) {
+        const { error, type, title, message, dialog, stateErrorMessage, logMessage } = options;
 
-        this.createDialog("An error occurred", `Oopsie, an error occurred during the update check! \nError message: ${error.message}`);
+        const errorMessage = message
+            ? message
+            : error
+                ? `Oopsie, an error occurred during the update check. \nError message: ${error.message}`
+                : `Oopsie, an error occurred during the update check. Please check the logs for more information`;
 
-        stackLog("error", "An error occurred during the update check:", error);
+        if (!type) {
+            this.setState("arch", "error", "An error occurred, check logs for more information");
+            this.setState("flatpak", "error", "An error occurred, check logs for more information");
+            this.setState("aur", "error", "An error occurred, check logs for more information")
+            this.setState("nyarch", "error", "An error occurred, check logs for more information");
+        } else {
+            this.setState(type, "error", stateErrorMessage ?? 'An error occurred, check logs for more information');
+        }
+
+        if (dialog) {
+            const dialogTitle = title
+                ? title
+                : 'An error occurred';
+
+            this.createDialog(dialogTitle, errorMessage);
+        }
+
+        if (error) stackLog("error", logMessage ?? "An error occurred during the update check:", error);
+        else stackLog("error", logMessage ?? errorMessage);
     }
 
     async fetch(url) {
@@ -491,15 +571,18 @@ export const NyarchupdaterWindow = GObject.registerClass({
 
     createDialog(title, message, options = []) {
         const dialog = Adw.AlertDialog.new(title, null);
+
         dialog.set_body(message);
         dialog.add_response("close", "_Close");
         dialog.set_default_response("close");
         dialog.set_close_response("close");
+
         if (options.length) {
             for (const option of options) {
                 dialog.add_response(option.responseId, option.responseLabel);
             }
         }
+
         dialog.connect("response", (_source, response) => {
             if (options.length) {
                 for (const option of options) {
@@ -508,14 +591,15 @@ export const NyarchupdaterWindow = GObject.registerClass({
             }
             if (response === "close") dialog.close();
         });
+
         dialog.present(dialog);
     }
 
     async fetchAppUpdates() {
-        stackLog("log", "Fetching app updates");
         const res = await this.fetch("https://api.github.com/repos/NyarchLinux/NyarchUpdater/releases/latest");
         const currentVersion = this.application.version;
         const latestVersion = res.tag_name;
+
         if (compareVersions(currentVersion, latestVersion) !== 1) return;
 
         this.createDialog("Nyarch Updater Update", `A new version of Nyarch Updater is available: ${latestVersion}`, [{
@@ -537,6 +621,10 @@ export const NyarchupdaterWindow = GObject.registerClass({
 
     async fetchAURUpdates() {
         const helper = await getAURHelper();
+        if (!helper) {
+            throw new Error("No supported AUR helper is installed on your machine. Please install one of the following: yay, pikaur, paru, trizen.")
+        }
+
         return getUpdatesForHelper(helper);
     }
 });
