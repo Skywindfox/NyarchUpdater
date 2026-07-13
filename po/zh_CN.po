@@ -1,0 +1,198 @@
+# Chinese translations for nyarchupdater package.
+# Copyright (C) 2026 THE nyarchupdater'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the nyarchupdater package.
+# 天风家的小白狐@Skywind_Fox <Skywind_Fox@foxmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nyarchupdater\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-03 21:28+0800\n"
+"PO-Revision-Date: 2026-07-13 10:31+0800\n"
+"Last-Translator: 天风家的小白狐@Skywind_Fox <Skywind_Fox@foxmail.com>\n"
+"Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/moe.nyarchlinux.updater.desktop.in:2
+#: data/moe.nyarchlinux.updater.metainfo.xml.in:6 src/window.ui:8
+msgid "Nyarch Updater"
+msgstr "Nyarch 更新程序"
+
+#: data/moe.nyarchlinux.updater.desktop.in:3
+msgid "Keep your Nyarch Linux system up to date"
+msgstr "让你的 Nyarch Linux 保持最新喵！"
+
+#: data/moe.nyarchlinux.updater.metainfo.xml.in:7
+msgid "Utility tool for updating your Nyarch Linux system"
+msgstr "可以更新 Nyarch Linux 的高级工具"
+
+#: data/moe.nyarchlinux.updater.metainfo.xml.in:9
+msgid ""
+"A linux guided tool for updating your Arch packages, Flatpaks, AUR Packages "
+"and Nyarch releases in a beautiful and easy GUI."
+msgstr ""
+"一款 Linux 向导式图形工具，可以很轻松地更新 Arch、Flatpak、AUR 包"
+"以及 Nyarch 发行版喵~。"
+
+#: data/moe.nyarchlinux.updater.gschema.xml:12
+msgid "The AUR helper Updater will use. Must be one of the supported choices."
+msgstr "Nyarch 更新程序将会使用某种 AUR 助手进行更新，但是这个 AUR 助手必须是受支持的选项之一。"
+
+#: data/moe.nyarchlinux.updater.gschema.xml:13 src/settings.ui:20
+msgid "AUR Helper"
+msgstr "AUR 助手"
+
+#: data/moe.nyarchlinux.updater.gschema.xml:24
+msgid "The command used to run system updates."
+msgstr "运行系统更新的命令。"
+
+#: data/moe.nyarchlinux.updater.gschema.xml:25 src/settings.ui:37
+msgid "System Update Command"
+msgstr "系统更新命令"
+
+#: src/faq.ui:8 src/faq.ui:32
+msgid "FAQ & Common Issues"
+msgstr "常见的问题"
+
+#: src/faq.ui:45
+msgid "What is this app?"
+msgstr "这个程序是做什么的？"
+
+#: src/faq.ui:56
+msgid ""
+"Nyarch Updater is a utility application designed to help you keep your "
+"system up to date! It allows package updates, flatpak updates, and most "
+"importantly, Nyarch release updates."
+msgstr "Nyarch 更新程序是一款帮助您保持系统最新的实用工具！它支持软件包更新、Flatpak 更新，以及最最重要的 Nyarch 发行版更新喵！"
+
+#: src/faq.ui:74
+msgid ""
+"Clicking buttons such as \"execute command\" or \"show commands\" does "
+"nothing"
+msgstr "点击“执行命令”或“显示命令”等按钮没有反应。"
+
+#: src/faq.ui:85
+msgid ""
+"This is a known issue that we are trying to fix. In the meantime, restarting "
+"the app should make it work. I would say: restart it until it works, and "
+"until we fix it."
+msgstr "这是一个正在尝试修复的已知问题，重新启动应该可以正常工作...大概喵。如果不可以的话那就不停地重启，一直到它正常运行为止！我们已经在尽快修复了喵...别急喵..."
+
+#: src/faq.ui:103
+msgid "Executing a command did nothing"
+msgstr "执行此命令没有效果...怎么回事呢？"
+
+#: src/faq.ui:114
+msgid ""
+"Something went wrong here. Click \"show command\" and execute it yourself. "
+"If it persists, please report it in the Discord or the Github."
+msgstr "不好，出错了喵！你需要点击“显示命令”并手动执行。如果问题依旧发生了，请在 Discord 或 GitHub 上反馈喵。"
+
+#: src/faq.ui:132
+msgid ""
+"The application keeps asking me to update my release even though I did all "
+"the steps"
+msgstr "即使我完成了所有步骤，应用仍然要求我更新发行版。"
+
+#: src/faq.ui:143
+msgid ""
+"Something went wrong here, again. Don't worry, it's probably not your fault! "
+"Check if you didn't skip the \"update version file\" step! If you didn't and "
+"it still does not work, copy the command shown with \"Show Command\", and "
+"run it after finishing the steps on your preferred terminal emulator. Then "
+"restart updater to see the changes!"
+msgstr ""
+"又出错啦！别担心，这很可能不是你的问题喵。\n"
+"请先检查是否跳过了“更新版本文件”这一步喵。\n"
+"如果没跳过但仍然无效，请点击“显示命令”，把命令复制下来喵。\n"
+"然后在完成所有更新步骤之后，在你最喜欢的终端里手动运行它喵。\n"
+"运行完毕后，重启更新程序，问题应该就解决了喵！"
+
+#: src/gtk/help-overlay.ui:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "常规"
+
+#: src/gtk/help-overlay.ui:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "显示快捷键"
+
+#: src/gtk/help-overlay.ui:20
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "退出"
+
+#: src/window.ui:40
+msgid "Welcome"
+msgstr "欢迎使用 Nyarch 更新程序"
+
+#: src/window.ui:48
+msgid "Overview of your available updates"
+msgstr "以下是你的更新概览"
+
+#: src/window.ui:60
+
+msgid "Arch Linux Updates"
+msgstr "Arch Linux 更新"
+
+#: src/window.ui:61
+msgid "Updates to packages and programs"
+msgstr "软件包和程序的更新"
+
+#: src/window.ui:65 src/window.ui:124 src/window.ui:183 src/window.ui:242
+
+msgid "Update"
+msgstr "更新"
+
+#: src/window.ui:111 src/window.ui:170 src/window.ui:229
+msgid "Checking for updates..."
+msgstr "正在检查更新..."
+
+#: src/window.ui:120
+msgid "Flatpak Updates"
+msgstr "Flatpak 更新"
+
+#: src/window.ui:121
+msgid "Updates to flatpak programs"
+msgstr "Flatpak 应用程序更新"
+
+#: src/window.ui:179
+msgid "AUR Updates"
+msgstr "AUR 更新"
+
+#: src/window.ui:180
+msgid "Updates to your installed Arch User Repository packages"
+msgstr "更新已有的 AUR 包"
+
+#: src/window.ui:238
+
+msgid "Nyarch Updates"
+msgstr "Nyarch 更新"
+
+#: src/window.ui:239
+msgid "Updates to user configuration and Nyarch"
+msgstr "用户配置和 Nyarch 更新"
+
+#: src/window.ui:285
+msgid "Check for updates"
+msgstr "检查更新"
+
+#: src/settings.ui:6
+msgid "Settings"
+msgstr "设置"
+
+#: src/settings.ui:14
+msgid "Enable AUR package updates"
+msgstr "启用 AUR 包更新"
+
+#: src/settings.ui:15
+msgid "Check for and install updates from the Arch User Repository"
+msgstr "检查并从 AUR 安装更新"
+
+#: src/settings.ui:21
+msgid "Select the helper tool to use for AUR updates"
+msgstr "选择用于 AUR 更新的助手工具"
