@@ -3,7 +3,7 @@
     <requires lib="gtk" version="4.0"/>
     <requires lib="Adw" version="1.0"/>
     <template class="SettingsWindow" parent="AdwPreferencesDialog">
-        <property name="title">Settings</property>
+        <property name="title" translatable="yes">Settings</property>
         <property name="search-enabled">false</property>
         <child>
             <object class="AdwPreferencesPage">
