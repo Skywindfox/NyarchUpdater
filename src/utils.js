@@ -18,47 +18,150 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import GLib from 'gi://GLib';
+import Gio from "gi://Gio?version=2.0";
+
+export function isFlatpak() {
+    return !!GLib.getenv("container");
+
+}
+
+/**
+ * @typedef {Object} RunSpawnSuccessOptions
+ * @property {boolean} [throwOnError] If false, the function resolves with an object describing the result instead of throwing
+ * @property {{ [key: string]: string }} [extraEnv] Extra environment variables to set
+ * @property {number} [stderrLimit] Maximum chars from stderr included into thrown Error message
+ */
+
+/**
+ * @typedef {Object} RunSpawnFailureResult
+ * @property {string} stdout
+ * @property {string} stderr
+ * @property {boolean} success
+ * @property {number|null} exitStatus
+ */
+
+/**
+ * @overload
+ * @param {string[]} args
+ * @returns {Promise<string>}
+ */
+/**
+ * @overload
+ * @param {string[]} args
+ * @param {RunSpawnSuccessOptions & { throwOnError?: true }} [options]
+ * @returns {Promise<string>}
+ */
+/**
+ * @overload
+ * @param {string[]} args
+ * @param {RunSpawnSuccessOptions & { throwOnError: true }} options
+ * @returns {Promise<string>}
+ */
+/**
+ * @overload
+ * @param {string[]} args
+ * @param {RunSpawnSuccessOptions & { throwOnError: false }} options
+ * @returns {Promise<RunSpawnFailureResult>}
+ */
+/**
+ * @param {string[]} args
+ * @param {RunSpawnSuccessOptions} [options]
+ * @returns {Promise<string|RunSpawnFailureResult>}
+ */
+export async function runSpawn(args, options) {
+    const opts = /** @type {RunSpawnSuccessOptions} */ (options || {});
+
+    return new Promise((resolve, reject) => {
+        try {
+            const launcher = new Gio.SubprocessLauncher({
+                flags: (Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE)
+            });
+
+            launcher.setenv("LANG", "C", true);
+            for (const [k, v] of Object.entries(opts.extraEnv || {})) {
+                launcher.setenv(k, v, true);
+            }
+
+            const proc = launcher.spawnv(args);
+            proc.communicate_utf8_async(null, null, (proc, res) => {
+                try {
+                    const [, stdout, stderr] = proc.communicate_utf8_finish(res);
+
+                    const success = proc.get_successful();
+                    let exitStatus = null;
+
+                    if (typeof proc.get_exit_status === 'function') {
+                        try { exitStatus = proc.get_exit_status(); } catch (_) { exitStatus = null; }
+                    }
+
+                    if (success) {
+                        if (opts.throwOnError === false) resolve({ stdout, stderr, success: true, exitStatus: 0 });
+                        else resolve(stdout);
+                    } else {
+                        const stderrText = (stderr || '').trim();
+                        if (opts.throwOnError === false) {
+                            // backward-compat: resolve with an object instead of rejecting
+                            resolve({ stdout, stderr: stderrText, success: false, exitStatus });
+                        } else {
+                            const stderrLimit = opts && opts.stderrLimit ? opts.stderrLimit : 10000;
+                            const shortStderr = stderrText.length > stderrLimit ? stderrText.slice(0, stderrLimit) + '…(truncated)' : stderrText;
+                            const errMsg = shortStderr || `Process exited with status ${exitStatus}`;
+                            const err = new Error(errMsg);
+                            err.exitStatus = exitStatus;
+                            err.stderr = stderrText;
+                            err.stdout = stdout;
+                            reject(err);
+                        }
+                    }
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+
+export function getSpawnCommand(bash) {
+    const command = [];
+    if (isFlatpak()) command.push(...["flatpak-spawn", "--host"]);
+    if (bash) command.push(...["bash", "-c"])
+    return command;
+}
+
 /**
  * Used to log in the console with a small stack trace saying where the log was called from
- * @param {string} type The type of log to be used (console[type])
- * @param {any[]} args The arguments to be logged
+ * @param {keyof Console} type The type of log to be used (console[type])
+ * @param {...any} args The arguments to be logged
  */
-import GLib from 'gi://GLib';
-
-export function is_flatpak() {
-    if (GLib.getenv("container")) {
-        return true;
-    }
-    return false;
-}
-
-export function get_spawn_command() {
-    if (is_flatpak()) {
-        return ["flatpak-spawn", "--host"];
-    } else {
-        return [];
-    }
-}
-
 export function stackLog(type, ...args) {
     let initiator = 'unknown place';
-    const e = new Error();
-    if (typeof e.stack === 'string') {
-        let isFirst = true;
-        for (const line of e.stack.split('\n')) {
-            const matches = line.match(/^\s+at\s+(.*)/);
-            if (matches) {
-                // first line - current function
-                if (!isFirst) {
-                    // second line - caller (what we are looking for)
-                    initiator = matches[1];
-                    break;
-                }
-                isFirst = false;
-            }
+
+    const stack = (new Error()).stack;
+    if (typeof stack === 'string') {
+        const lines = stack.split('\n');
+
+        for (const raw of lines) {
+            const line = raw.trim();
+            if (!line) continue;
+
+            if (line.includes('stackLog@')) continue;
+            if (line.includes('resource:///org/gnome/gjs/modules/')) continue;
+            if (line.startsWith('Error')) continue;
+
+            initiator = line;
+            break;
         }
     }
-    console[type](...args, '\n', `  at ${initiator}`);
+
+    const fn = /** @type {((...data: any[]) => void) | undefined} */ (console[type]);
+    if (typeof fn === 'function') {
+        fn.call(console, ...args, '\n', `  at ${initiator}`);
+    } else {
+        console.log(...args, '\n', `  at ${initiator}`);
+    }
 }
 
 /**
@@ -83,3 +186,4 @@ export function compareVersions(old, newer) {
     }
     return 0;
 }
+

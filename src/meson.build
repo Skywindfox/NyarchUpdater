@@ -1,6 +1,8 @@
 pkgdatadir = get_option('datadir') / meson.project_name()
 gnome = import('gnome')
 
+metainfo_src = join_paths(meson.current_build_dir(), '..', 'data', 'moe.nyarchlinux.updater.metainfo.xml')
+
 src_res = gnome.compile_resources('moe.nyarchlinux.updater.src',
   'moe.nyarchlinux.updater.src.gresource.xml',
   gresource_bundle: true,
@@ -13,6 +15,8 @@ data_res = gnome.compile_resources('moe.nyarchlinux.updater.data',
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
+  source_dir: [meson.current_source_dir(), join_paths(meson.current_build_dir(), '..', 'data')],
+  dependencies: [appstream_file]
 )
 
 bin_conf = configuration_data()

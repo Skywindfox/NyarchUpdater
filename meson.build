@@ -1,13 +1,16 @@
 project('nyarchupdater',
-          version: '0.1.11',
+          version: '0.1.14',
     meson_version: '>= 0.62.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
 
+app_id = 'moe.nyarchlinux.updater'
+
+prefix = get_option('prefix')
+datadir = join_paths(prefix, get_option('datadir'))
+
 i18n = import('i18n')
 gnome = import('gnome')
-
-
 
 subdir('data')
 subdir('src')

@@ -24,10 +24,10 @@ import Adw from 'gi://Adw?version=1';
 
 import { NyarchupdaterWindow } from './window.js';
 import { FAQWindow } from "./faq.js";
+import { SettingsWindow } from "./settings.js";
 
 pkg.initGettext();
 pkg.initFormat();
-
 
 export const NyarchupdaterApplication = GObject.registerClass(
     class NyarchupdaterApplication extends Adw.Application {
@@ -35,6 +35,7 @@ export const NyarchupdaterApplication = GObject.registerClass(
             super({ application_id: 'moe.nyarchlinux.updater', flags: Gio.ApplicationFlags.DEFAULT_FLAGS });
 
             this.faqWindow = null;
+            this.settingsWindow = null;
 
             const quitAction = new Gio.SimpleAction({ name: 'quit' });
                 quitAction.connect('activate', () => {
@@ -43,27 +44,17 @@ export const NyarchupdaterApplication = GObject.registerClass(
             this.add_action(quitAction);
             this.set_accels_for_action('app.quit', ['<primary>q']);
 
-            this.set_version("0.1.11");
+            this.set_version(pkg.version);
 
             const showAboutAction = new Gio.SimpleAction({ name: 'about' });
             showAboutAction.connect('activate', () => {
-                const aboutParams = {
-                    transient_for: this.active_window,
-                    application_name: 'Nyarch Updater',
-                    application_icon: 'moe.nyarchlinux.updater',
-                    issue_url: 'https://github.com/NyarchLinux/NyarchUpdater/issues',
-                    developer_name: 'Nyarch Linux',
-                    version: this.version,
-                    developers: [
-                        'Adam Billard'
-                    ],
-                    copyright: '© 2025 Nyarch Linux',
-                    website: "https://nyarchlinux.moe",
-                    license: "GPL-3.0-or-later",
-                    support_url: "https://discord.gg/xuw6BNXXE7"
-                };
-                const aboutWindow = new Adw.AboutWindow(aboutParams);
-                aboutWindow.present();
+                if (!this.active_window) return;
+
+                const aboutWindow = Adw.AboutDialog.new_from_appdata('/moe/nyarchlinux/updater/moe.nyarchlinux.updater.metainfo.xml', pkg.version);
+                aboutWindow.developers = ['Adam Billard'];
+                aboutWindow.copyright = '© 2025 Nyarch Linux';
+                // passing a window works
+                aboutWindow.present(/** @type {any} */ (this.active_window));
             });
 
             const faqAction = new Gio.SimpleAction({ name: 'faq' });
@@ -78,8 +69,17 @@ export const NyarchupdaterApplication = GObject.registerClass(
                 });
             });
 
+            const settingsAction = new Gio.SimpleAction({ name: 'settings' });
+            settingsAction.connect('activate', () => {
+                if (!this.settingsWindow) {
+                    this.settingsWindow = new SettingsWindow();
+                }
+                this.settingsWindow.present(/** @type {any} */ (this.active_window));
+            });
+
             this.add_action(showAboutAction);
             this.add_action(faqAction);
+            this.add_action(settingsAction);
         }
 
         vfunc_activate() {

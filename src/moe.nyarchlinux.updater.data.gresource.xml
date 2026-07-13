@@ -6,5 +6,7 @@
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">presentation.ui</file>
     <file preprocess="xml-stripblanks">faq.ui</file>
+    <file preprocess="xml-stripblanks">settings.ui</file>
+    <file>moe.nyarchlinux.updater.metainfo.xml</file>
   </gresource>
 </gresources>

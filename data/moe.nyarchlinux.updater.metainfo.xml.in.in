@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+	<id>@app-id@</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-3.0-or-later</project_license>
+	<name>Nyarch Updater</name>
+	<summary>Utility tool for updating your Nyarch Linux system</summary>
+	<description>
+	  <p>A linux guided tool for updating your Arch packages, Flatpaks, AUR Packages and Nyarch releases in a beautiful and easy GUI.</p>
+	</description>
+
+	<launchable type="desktop-id">@app-id@.desktop</launchable>
+
+	<releases>
+		<release type="snapshot" version="@release-version@"/>
+	</releases>
+
+	<requires>
+        <display_length compare="ge">360</display_length>
+    </requires>
+    <project_group>Nyarch Linux</project_group>
+    <developer id="moe.nyarchlinux">
+        <name>Nyarch Linux</name>
+    </developer>
+    <url type="homepage">https://nyarchlinux.moe</url>
+    <url type="bugtracker">https://github.com/NyarchLinux/NyarchUpdater/issues</url>
+    <url type="help">https://discord.gg/xuw6BNXXE7</url>
+    <url type="contribute">https://github.com/NyarchLinux/NyarchUpdater</url>
+    <url type="vcs-browser">https://github.com/NyarchLinux/NyarchUpdater</url>
+</component>

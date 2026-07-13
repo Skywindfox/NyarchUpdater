@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Nyarch Updater
+Comment=Keep your Nyarch Linux system up to date
+Exec=@app-id@
+Icon=@app-id@
+Terminal=false
+Type=Application
+Categories=Utility;
+StartupNotify=true

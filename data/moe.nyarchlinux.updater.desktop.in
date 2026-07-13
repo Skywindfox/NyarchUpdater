@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Nyarch Updater
-Comment=Keep your Nyarch Linux system up to date
-Exec=moe.nyarchlinux.updater
-Icon=moe.nyarchlinux.updater
-Terminal=false
-Type=Application
-Categories=Utility;
-StartupNotify=true

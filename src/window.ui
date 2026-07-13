@@ -14,7 +14,7 @@
               <object class="GtkMenuButton">
                 <property name="primary">True</property>
                 <property name="icon-name">open-menu-symbolic</property>
-                <property name="tooltip-text" translatable="yes">Menu</property>
+                <property name="tooltip-text">Menu</property>
                 <property name="menu-model">primary_menu</property>
               </object>
             </child>
@@ -62,7 +62,7 @@
                         <property name="enable-expansion">true</property>
                         <child type="suffix">
                           <object class="GtkButton" id="arch_button">
-                            <property name="label">Update</property>
+                            <property name="label" translatable="yes">Update</property>
                             <property name="valign">center</property>
                             <property name="visible">false</property>
                             <style>
@@ -121,7 +121,7 @@
                         <property name="subtitle" translatable="yes">Updates to flatpak programs</property>
                         <child type="suffix">
                           <object class="GtkButton" id="flatpak_button">
-                            <property name="label">Update</property>
+                            <property name="label" translatable="yes">Update</property>
                             <property name="valign">center</property>
                             <property name="visible">false</property>
                             <style>
@@ -175,12 +175,71 @@
                       </object>
                     </child>
                     <child>
+                      <object class="AdwExpanderRow" id="aur_row">
+                        <property name="title" translatable="yes">AUR Updates</property>
+                        <property name="subtitle" translatable="yes">Updates to your installed Arch User Repository packages</property>
+                        <child type="suffix">
+                          <object class="GtkButton" id="aur_button">
+                            <property name="label" translatable="yes">Update</property>
+                            <property name="valign">center</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="suggested-action" />
+                            </style>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkSpinner" id="aur_spinner">
+                            <property name="valign">center</property>
+                            <property name="spinning">true</property>
+                            <property name="visible">true</property>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="aur_success">
+                            <property name="valign">center</property>
+                            <property name="icon-name">updater-check-round-outline-symbolic</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="flat" />
+                              <class name="success" />
+                            </style>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="aur_error">
+                            <property name="valign">center</property>
+                            <property name="icon-name">edit-delete-symbolic</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="flat" />
+                              <class name="error" />
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="hexpand">true</property>
+                            <property name="max-content-height">150</property>
+                            <property name="propagate-natural-height">true</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
+                            <child>
+                              <object class="GtkLabel" id="aur_label">
+                                <property name="label" translatable="yes">Checking for updates...</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
                       <object class="AdwActionRow" id="nyarch_row">
                         <property name="title" translatable="yes">Nyarch Updates</property>
                         <property name="subtitle" translatable="yes">Updates to user configuration and Nyarch</property>
                         <child type="suffix">
                           <object class="GtkButton" id="nyarch_button">
-                            <property name="label">Update</property>
+                            <property name="label" translatable="yes">Update</property>
                             <property name="valign">center</property>
                             <property name="visible">false</property>
                             <style>
@@ -223,7 +282,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="refresh_button">
-                    <property name="label">Check for updates</property>
+                    <property name="label" translatable="yes">Check for updates</property>
                     <property name="margin-top">10</property>
                   </object>
                 </child>
@@ -237,15 +296,19 @@
   <menu id="primary_menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+        <attribute name="label">_Keyboard Shortcuts</attribute>
         <attribute name="action">win.show-help-overlay</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Common Issues &amp; FAQ</attribute>
+        <attribute name="label">_Common Issues &amp; FAQ</attribute>
         <attribute name="action">app.faq</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_About NyarchUpdater</attribute>
+        <attribute name="label">_Settings</attribute>
+        <attribute name="action">app.settings</attribute>
+      </item>
+      <item>
+        <attribute name="label">_About NyarchUpdater</attribute>
         <attribute name="action">app.about</attribute>
       </item>
     </section>
