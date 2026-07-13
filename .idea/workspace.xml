@@ -7,48 +7,10 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: remove debugging">
-      <change afterPath="$PROJECT_DIR$/data/moe.nyarchlinux.updater.metainfo.xml.in.in" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/settings.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/settings.ui" afterDir="false" />
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: bump version">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/@types/gio-2.0.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/@types/gio-2.0.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/meson.build" beforeDir="false" afterPath="$PROJECT_DIR$/data/meson.build" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/moe.nyarchlinux.updater.desktop.in" beforeDir="false" afterPath="$PROJECT_DIR$/data/moe.nyarchlinux.updater.desktop.in.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/moe.nyarchlinux.updater.gschema.xml" beforeDir="false" afterPath="$PROJECT_DIR$/data/moe.nyarchlinux.updater.gschema.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/moe.nyarchlinux.updater.metainfo.xml.in" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/meson.build" beforeDir="false" afterPath="$PROJECT_DIR$/meson.build" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/faq.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/faq.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/po/zh_CN.po" beforeDir="false" afterPath="$PROJECT_DIR$/po/zh_CN.po" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/meson.build" beforeDir="false" afterPath="$PROJECT_DIR$/src/meson.build" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.data.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.data.gresource.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nyarchupdater.data.gresource.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/adw-1.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/cairo-1.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/cairo.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/console.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/dom.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/freetype2-2.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/gdk-4.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/gdkpixbuf-2.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/gettext.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/gi.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/gio-2.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/gjs.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/glib-2.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/gmodule-2.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/gobject-2.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/graphene-1.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/gsk-4.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/gtk-4.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/harfbuzz-0.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/index.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/pango-1.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/pangocairo-1.0.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/system.d.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,33 +79,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Node.js.window.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SHELLCHECK.PATH&quot;: &quot;/home/adam/.local/share/JetBrains/WebStorm2026.1/Shell Script/shellcheck&quot;,
-    &quot;Shell Script.run.sh.executor&quot;: &quot;Run&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/run/media/adam/données/Utilisateurs/Adam/Documents/dev/TypeScript/nekoview&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/adam/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Node.js.window.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SHELLCHECK.PATH": "/home/adam/.local/share/JetBrains/WebStorm2026.1/Shell Script/shellcheck",
+    "Shell Script.run.sh.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "Skywindfox-localization-zh-cn",
+    "javascript.preferred.runtime.type.id": "node",
+    "last_opened_file_path": "/run/media/adam/données/Utilisateurs/Adam/Documents/dev/TypeScript/nekoview",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/home/adam/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="es6.move.members.recent.items">
       <recent name="$PROJECT_DIR$/src/aur.js" />
@@ -232,39 +194,9 @@
       <workItem from="1783764803817" duration="9079000" />
       <workItem from="1783776736756" duration="6279000" />
       <workItem from="1783846588550" duration="8798000" />
-      <workItem from="1783859845448" duration="4483000" />
-    </task>
-    <task id="LOCAL-00017" summary="feat: add flatpak updates">
-      <option name="closed" value="true" />
-      <created>1728815143669</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1728815143669</updated>
-    </task>
-    <task id="LOCAL-00018" summary="feat: add dummy nyarch release updates">
-      <option name="closed" value="true" />
-      <created>1728819632194</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1728819632194</updated>
-    </task>
-    <task id="LOCAL-00019" summary="fix: icons">
-      <option name="closed" value="true" />
-      <created>1728824398109</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1728824398109</updated>
-    </task>
-    <task id="LOCAL-00020" summary="feat: add nyarch release updates">
-      <option name="closed" value="true" />
-      <created>1728826935444</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1728826935444</updated>
+      <workItem from="1783859845448" duration="4658000" />
+      <workItem from="1783875777317" duration="225000" />
+      <workItem from="1783938372854" duration="1150000" />
     </task>
     <task id="LOCAL-00021" summary="refractor: remove unused pages.js">
       <option name="closed" value="true" />
@@ -626,7 +558,39 @@
       <option name="project" value="LOCAL" />
       <updated>1783852358304</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="chore: remove duplicated types folder">
+      <option name="closed" value="true" />
+      <created>1783872746267</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1783872746268</updated>
+    </task>
+    <task id="LOCAL-00067" summary="refactor: remove menu in faq page">
+      <option name="closed" value="true" />
+      <created>1783872761485</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1783872761485</updated>
+    </task>
+    <task id="LOCAL-00068" summary="feat: settings window and refactored how the app info is passed through different files">
+      <option name="closed" value="true" />
+      <created>1783872810734</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1783872810734</updated>
+    </task>
+    <task id="LOCAL-00069" summary="chore: bump version">
+      <option name="closed" value="true" />
+      <created>1783872829836</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1783872829836</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -664,9 +628,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chore: bump version and remove unused variable from run.sh" />
-    <MESSAGE value="chore: bump version and add app details" />
-    <MESSAGE value="feat: add update checker" />
     <MESSAGE value="feat: add Soup to the types" />
     <MESSAGE value="refactor: fetch app updates after everything" />
     <MESSAGE value="chore: bump versions" />
@@ -684,11 +645,14 @@
     <MESSAGE value="chore: remove unnecessary logging" />
     <MESSAGE value="feat: aur updates support" />
     <MESSAGE value="feat: aur updates in the updater&#10;&#10;Auto detects the AUR helper&#10;WIP: settings for the user to input its preferred aur helper" />
-    <MESSAGE value="chore: bump version" />
     <MESSAGE value="feat: annoying update&#10;&#10;Added a check to verify if you have an AUR Helper installed. If not, will be annoying and show you a dialog each time" />
     <MESSAGE value="fix: errors in the sign checking" />
     <MESSAGE value="feat: disable aur checking if no valid helper is present and respect user settings" />
     <MESSAGE value="chore: remove debugging" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: remove debugging" />
+    <MESSAGE value="chore: remove duplicated types folder" />
+    <MESSAGE value="refactor: remove menu in faq page" />
+    <MESSAGE value="feat: settings window and refactored how the app info is passed through different files" />
+    <MESSAGE value="chore: bump version" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: bump version" />
   </component>
 </project>

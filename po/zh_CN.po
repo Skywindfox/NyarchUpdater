@@ -16,6 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: src/main.js:55
+msgid "translator-credits"
+msgstr "天风家的小白狐@Skywind_Fox <Skywind_Fox@foxmail.com>"
+
 #: data/moe.nyarchlinux.updater.desktop.in:2
 #: data/moe.nyarchlinux.updater.metainfo.xml.in:6 src/window.ui:8
 msgid "Nyarch Updater"

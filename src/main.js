@@ -51,8 +51,9 @@ export const NyarchupdaterApplication = GObject.registerClass(
                 if (!this.active_window) return;
 
                 const aboutWindow = Adw.AboutDialog.new_from_appdata('/moe/nyarchlinux/updater/moe.nyarchlinux.updater.metainfo.xml', pkg.version);
-                aboutWindow.developers = ['Adam Billard'];
-                aboutWindow.copyright = '© 2025 Nyarch Linux';
+                aboutWindow.set_developers([ 'Adam Billard <contact@classydev.fr>', 'Francesco Caracciolo' ]);
+                aboutWindow.set_translator_credits(_('translator-credits'));
+                aboutWindow.set_copyright('© 2025 Nyarch Linux');
                 // passing a window works
                 aboutWindow.present(/** @type {any} */ (this.active_window));
             });
